@@ -62,10 +62,16 @@ p {
     align-items: center;
 }
 
+.personal,
 .user {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.add-task {
+    width: 1rem;
+    height: 1rem;
 }
 
 .profile-picture {
