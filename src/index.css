@@ -6,11 +6,19 @@
 
 :root {
     /* colors to be changed */
+    /*
     --primary: #1d2d44;
     --secondary: #0d1321;
     --tertiary: #3e5c76;
     --accent: #748cab;
-    --white: #f0ebd8;
+    --text-color: #f0ebd8;
+     */
+
+    --primary: #eeeeee;
+    --secondary: #d3d3d3;
+    --tertiary: #3e5c76;
+    --accent: #748cab;
+    --text-color: #1d2d44;
 }
 
 /* GLOBAL */
@@ -25,7 +33,7 @@ nav ul li {
 }
 
 button {
-    background-color: var(--white);
+    background-color: var(--primary);
 }
 
 body,
@@ -42,7 +50,7 @@ body {
 }
 
 p {
-    color: var(--white);
+    color: var(--text-color);
 }
 
 /* HEADER */
@@ -69,11 +77,6 @@ p {
     align-items: center;
 }
 
-.add-task {
-    width: 1rem;
-    height: 1rem;
-}
-
 .profile-picture {
     height: 2.5rem;
     width: auto;
@@ -82,7 +85,7 @@ p {
 }
 
 .username {
-    color: var(--white);
+    color: var(--text-color);
 }
 
 /* SIDEBAR */
@@ -118,13 +121,36 @@ p {
 }
 
 .nav-button.active {
-    background-color: var(--accent);
+    background-color: var(--primary);
 }
 
 /* CONTENT */
 
 #content {
+    justify-content: center;
+    display: flex;
     background-color: var(--primary);
+}
+
+.add-button {
+    display: flex;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    background-color: var(--accent);
+}
+
+.add-button button {
+    width: 5rem;
+    height: 5rem;
+    margin: 0;
+    padding: 0;
+    background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    border: none;
+    cursor: pointer;
 }
 
 /* FOOTER */
