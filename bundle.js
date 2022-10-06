@@ -16,12 +16,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2__);
 // Imports
 
 
+
+var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg */ "./src/img/svg/add_FILL0_wght400_GRAD0_opsz48.svg"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "*,\n*::before,\n*::after {\n    box-sizing: border-box;\n}\n\n:root {\n    /* colors to be changed */\n    --primary: #1d2d44;\n    --secondary: #0d1321;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --white: #f0ebd8;\n}\n\n/* GLOBAL */\n\nnav ul {\n    margin: 0;\n    padding: 0;\n}\n\nnav ul li {\n    list-style: none;\n}\n\nbutton {\n    background-color: var(--white);\n}\n\nbody,\nhtml {\n    height: 100%;\n    width: 100%;\n}\n\nbody {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 1fr 25fr 1fr;\n    margin: 0;\n}\n\np {\n    color: var(--white);\n}\n\n/* HEADER */\n\n.header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    grid-area: 1 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n    padding: 0 1rem;\n}\n\n.logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.personal,\n.user {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.add-task {\n    width: 1rem;\n    height: 1rem;\n}\n\n.profile-picture {\n    height: 2.5rem;\n    width: auto;\n    border-radius: 100%;\n    margin-right: 0.5rem;\n}\n\n.username {\n    color: var(--white);\n}\n\n/* SIDEBAR */\n\n.sidebar {\n    display: flex;\n    justify-content: center;\n    align-items: flex-start;\n    background-color: var(--secondary);\n}\n\n.sidebar nav,\n.sidebar button,\n.sidebar ul {\n    width: 100%;\n}\n\n.sidebar li {\n    display: flex;\n    justify-content: center;\n    margin: 1rem;\n}\n\n.nav-button {\n    height: 3rem;\n    border: none;\n    cursor: pointer;\n    user-select: none;\n}\n\n.nav-button:hover {\n    background-color: var(--accent);\n}\n\n.nav-button.active {\n    background-color: var(--accent);\n}\n\n/* CONTENT */\n\n#content {\n    background-color: var(--primary);\n}\n\n/* FOOTER */\n\n.footer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    grid-area: 3 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n}\n\n.footer p {\n    margin: 0;\n    font-size: 0.75rem;\n}\n", "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA;;;IAGI,sBAAsB;AAC1B;;AAEA;IACI,yBAAyB;IACzB,kBAAkB;IAClB,oBAAoB;IACpB,mBAAmB;IACnB,iBAAiB;IACjB,gBAAgB;AACpB;;AAEA,WAAW;;AAEX;IACI,SAAS;IACT,UAAU;AACd;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,8BAA8B;AAClC;;AAEA;;IAEI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,SAAS;AACb;;AAEA;IACI,mBAAmB;AACvB;;AAEA,WAAW;;AAEX;IACI,aAAa;IACb,8BAA8B;IAC9B,mBAAmB;IACnB,kCAAkC;IAClC,kCAAkC;IAClC,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;AACvB;;AAEA;;IAEI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;AACvB;;AAEA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,cAAc;IACd,WAAW;IACX,mBAAmB;IACnB,oBAAoB;AACxB;;AAEA;IACI,mBAAmB;AACvB;;AAEA,YAAY;;AAEZ;IACI,aAAa;IACb,uBAAuB;IACvB,uBAAuB;IACvB,kCAAkC;AACtC;;AAEA;;;IAGI,WAAW;AACf;;AAEA;IACI,aAAa;IACb,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,+BAA+B;AACnC;;AAEA;IACI,+BAA+B;AACnC;;AAEA,YAAY;;AAEZ;IACI,gCAAgC;AACpC;;AAEA,WAAW;;AAEX;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kCAAkC;IAClC,kCAAkC;AACtC;;AAEA;IACI,SAAS;IACT,kBAAkB;AACtB","sourcesContent":["*,\n*::before,\n*::after {\n    box-sizing: border-box;\n}\n\n:root {\n    /* colors to be changed */\n    --primary: #1d2d44;\n    --secondary: #0d1321;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --white: #f0ebd8;\n}\n\n/* GLOBAL */\n\nnav ul {\n    margin: 0;\n    padding: 0;\n}\n\nnav ul li {\n    list-style: none;\n}\n\nbutton {\n    background-color: var(--white);\n}\n\nbody,\nhtml {\n    height: 100%;\n    width: 100%;\n}\n\nbody {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 1fr 25fr 1fr;\n    margin: 0;\n}\n\np {\n    color: var(--white);\n}\n\n/* HEADER */\n\n.header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    grid-area: 1 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n    padding: 0 1rem;\n}\n\n.logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.personal,\n.user {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.add-task {\n    width: 1rem;\n    height: 1rem;\n}\n\n.profile-picture {\n    height: 2.5rem;\n    width: auto;\n    border-radius: 100%;\n    margin-right: 0.5rem;\n}\n\n.username {\n    color: var(--white);\n}\n\n/* SIDEBAR */\n\n.sidebar {\n    display: flex;\n    justify-content: center;\n    align-items: flex-start;\n    background-color: var(--secondary);\n}\n\n.sidebar nav,\n.sidebar button,\n.sidebar ul {\n    width: 100%;\n}\n\n.sidebar li {\n    display: flex;\n    justify-content: center;\n    margin: 1rem;\n}\n\n.nav-button {\n    height: 3rem;\n    border: none;\n    cursor: pointer;\n    user-select: none;\n}\n\n.nav-button:hover {\n    background-color: var(--accent);\n}\n\n.nav-button.active {\n    background-color: var(--accent);\n}\n\n/* CONTENT */\n\n#content {\n    background-color: var(--primary);\n}\n\n/* FOOTER */\n\n.footer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    grid-area: 3 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n}\n\n.footer p {\n    margin: 0;\n    font-size: 0.75rem;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "*,\n*::before,\n*::after {\n    box-sizing: border-box;\n}\n\n:root {\n    /* colors to be changed */\n    /*\n    --primary: #1d2d44;\n    --secondary: #0d1321;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --text-color: #f0ebd8;\n     */\n\n    --primary: #eeeeee;\n    --secondary: #d3d3d3;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --text-color: #1d2d44;\n}\n\n/* GLOBAL */\n\nnav ul {\n    margin: 0;\n    padding: 0;\n}\n\nnav ul li {\n    list-style: none;\n}\n\nbutton {\n    background-color: var(--primary);\n}\n\nbody,\nhtml {\n    height: 100%;\n    width: 100%;\n}\n\nbody {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 1fr 25fr 1fr;\n    margin: 0;\n}\n\np {\n    color: var(--text-color);\n}\n\n/* HEADER */\n\n.header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    grid-area: 1 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n    padding: 0 1rem;\n}\n\n.logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.personal,\n.user {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.profile-picture {\n    height: 2.5rem;\n    width: auto;\n    border-radius: 100%;\n    margin-right: 0.5rem;\n}\n\n.username {\n    color: var(--text-color);\n}\n\n/* SIDEBAR */\n\n.sidebar {\n    display: flex;\n    justify-content: center;\n    align-items: flex-start;\n    background-color: var(--secondary);\n}\n\n.sidebar nav,\n.sidebar button,\n.sidebar ul {\n    width: 100%;\n}\n\n.sidebar li {\n    display: flex;\n    justify-content: center;\n    margin: 1rem;\n}\n\n.nav-button {\n    height: 3rem;\n    border: none;\n    cursor: pointer;\n    user-select: none;\n}\n\n.nav-button:hover {\n    background-color: var(--accent);\n}\n\n.nav-button.active {\n    background-color: var(--primary);\n}\n\n/* CONTENT */\n\n#content {\n    justify-content: center;\n    display: flex;\n    background-color: var(--primary);\n}\n\n.add-button {\n    display: flex;\n    justify-content: center;\n    width: 5rem;\n    height: 5rem;\n    background-color: var(--accent);\n}\n\n.add-button button {\n    width: 5rem;\n    height: 5rem;\n    margin: 0;\n    padding: 0;\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n    background-repeat: no-repeat;\n    background-size: contain;\n\n    border: none;\n    cursor: pointer;\n}\n\n/* FOOTER */\n\n.footer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    grid-area: 3 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n}\n\n.footer p {\n    margin: 0;\n    font-size: 0.75rem;\n}\n", "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA;;;IAGI,sBAAsB;AAC1B;;AAEA;IACI,yBAAyB;IACzB;;;;;;MAME;;IAEF,kBAAkB;IAClB,oBAAoB;IACpB,mBAAmB;IACnB,iBAAiB;IACjB,qBAAqB;AACzB;;AAEA,WAAW;;AAEX;IACI,SAAS;IACT,UAAU;AACd;;AAEA;IACI,gBAAgB;AACpB;;AAEA;IACI,gCAAgC;AACpC;;AAEA;;IAEI,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,aAAa;IACb,8BAA8B;IAC9B,gCAAgC;IAChC,SAAS;AACb;;AAEA;IACI,wBAAwB;AAC5B;;AAEA,WAAW;;AAEX;IACI,aAAa;IACb,8BAA8B;IAC9B,mBAAmB;IACnB,kCAAkC;IAClC,kCAAkC;IAClC,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;AACvB;;AAEA;;IAEI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;AACvB;;AAEA;IACI,cAAc;IACd,WAAW;IACX,mBAAmB;IACnB,oBAAoB;AACxB;;AAEA;IACI,wBAAwB;AAC5B;;AAEA,YAAY;;AAEZ;IACI,aAAa;IACb,uBAAuB;IACvB,uBAAuB;IACvB,kCAAkC;AACtC;;AAEA;;;IAGI,WAAW;AACf;;AAEA;IACI,aAAa;IACb,uBAAuB;IACvB,YAAY;AAChB;;AAEA;IACI,YAAY;IACZ,YAAY;IACZ,eAAe;IACf,iBAAiB;AACrB;;AAEA;IACI,+BAA+B;AACnC;;AAEA;IACI,gCAAgC;AACpC;;AAEA,YAAY;;AAEZ;IACI,uBAAuB;IACvB,aAAa;IACb,gCAAgC;AACpC;;AAEA;IACI,aAAa;IACb,uBAAuB;IACvB,WAAW;IACX,YAAY;IACZ,+BAA+B;AACnC;;AAEA;IACI,WAAW;IACX,YAAY;IACZ,SAAS;IACT,UAAU;IACV,yDAAmE;IACnE,4BAA4B;IAC5B,wBAAwB;;IAExB,YAAY;IACZ,eAAe;AACnB;;AAEA,WAAW;;AAEX;IACI,aAAa;IACb,uBAAuB;IACvB,mBAAmB;IACnB,kCAAkC;IAClC,kCAAkC;AACtC;;AAEA;IACI,SAAS;IACT,kBAAkB;AACtB","sourcesContent":["*,\n*::before,\n*::after {\n    box-sizing: border-box;\n}\n\n:root {\n    /* colors to be changed */\n    /*\n    --primary: #1d2d44;\n    --secondary: #0d1321;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --text-color: #f0ebd8;\n     */\n\n    --primary: #eeeeee;\n    --secondary: #d3d3d3;\n    --tertiary: #3e5c76;\n    --accent: #748cab;\n    --text-color: #1d2d44;\n}\n\n/* GLOBAL */\n\nnav ul {\n    margin: 0;\n    padding: 0;\n}\n\nnav ul li {\n    list-style: none;\n}\n\nbutton {\n    background-color: var(--primary);\n}\n\nbody,\nhtml {\n    height: 100%;\n    width: 100%;\n}\n\nbody {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 1fr 25fr 1fr;\n    margin: 0;\n}\n\np {\n    color: var(--text-color);\n}\n\n/* HEADER */\n\n.header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    grid-area: 1 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n    padding: 0 1rem;\n}\n\n.logo {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.personal,\n.user {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n\n.profile-picture {\n    height: 2.5rem;\n    width: auto;\n    border-radius: 100%;\n    margin-right: 0.5rem;\n}\n\n.username {\n    color: var(--text-color);\n}\n\n/* SIDEBAR */\n\n.sidebar {\n    display: flex;\n    justify-content: center;\n    align-items: flex-start;\n    background-color: var(--secondary);\n}\n\n.sidebar nav,\n.sidebar button,\n.sidebar ul {\n    width: 100%;\n}\n\n.sidebar li {\n    display: flex;\n    justify-content: center;\n    margin: 1rem;\n}\n\n.nav-button {\n    height: 3rem;\n    border: none;\n    cursor: pointer;\n    user-select: none;\n}\n\n.nav-button:hover {\n    background-color: var(--accent);\n}\n\n.nav-button.active {\n    background-color: var(--primary);\n}\n\n/* CONTENT */\n\n#content {\n    justify-content: center;\n    display: flex;\n    background-color: var(--primary);\n}\n\n.add-button {\n    display: flex;\n    justify-content: center;\n    width: 5rem;\n    height: 5rem;\n    background-color: var(--accent);\n}\n\n.add-button button {\n    width: 5rem;\n    height: 5rem;\n    margin: 0;\n    padding: 0;\n    background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);\n    background-repeat: no-repeat;\n    background-size: contain;\n\n    border: none;\n    cursor: pointer;\n}\n\n/* FOOTER */\n\n.footer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    grid-area: 3 / 1 / span 1 / span 2;\n    background-color: var(--secondary);\n}\n\n.footer p {\n    margin: 0;\n    font-size: 0.75rem;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -135,6 +140,44 @@ module.exports = function (cssWithMappingToString) {
   };
 
   return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/getUrl.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    options = {};
+  }
+
+  if (!url) {
+    return url;
+  }
+
+  url = String(url.__esModule ? url.default : url); // If url is already wrapped in quotes, remove them
+
+  if (/^['"].*['"]$/.test(url)) {
+    url = url.slice(1, -1);
+  }
+
+  if (options.hash) {
+    url += options.hash;
+  } // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+
+
+  if (/["'() \t\n]|(%20)/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+
+  return url;
 };
 
 /***/ }),
@@ -600,14 +643,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
+/* harmony import */ var _createTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createTask */ "./src/js/createTask.js");
+
+
+
+// DOM CACHE
+const elContent = document.getElementById('content');
+const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
+
+
+// EVENT LISTENERS
+
+
 const draw = {
-    addTask(task) {
-        console.log(task);
-    }
+    initialize() {
+        createTaskWrapper();
+        this.addProfileImage();
+    },
+    addProject(data) {
+        console.log(data);
+        (0,_createTask__WEBPACK_IMPORTED_MODULE_1__.createProject)(data);
+    },
+    addButton() {
+        const elButton = document.createElement('button');
+        elButton.addEventListener('pointerdown', this.addCard);
+
+        const elParentDiv = document.createElement('div');
+        elParentDiv.className = 'add-button';
+        elParentDiv.appendChild(elButton);
+        elContent.appendChild(elParentDiv);
+    },
+    addCard() {
+        console.log('test');
+    },
+    addProfileImage() {
+        elProfilePicture.src = _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__;
+    },
+}
+
+
+function createTaskWrapper() {
+    const taskWrapper = document.createElement('div');
+    taskWrapper.className = 'task-wrapper';
+
+    elContent.appendChild(taskWrapper);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (draw);
 
+
+/***/ }),
+
+/***/ "./src/img/svg/add_FILL0_wght400_GRAD0_opsz48.svg":
+/*!********************************************************!*\
+  !*** ./src/img/svg/add_FILL0_wght400_GRAD0_opsz48.svg ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "46ae0e09d1132337aa92.svg";
+
+/***/ }),
+
+/***/ "./src/img/temp/profile-picture.png":
+/*!******************************************!*\
+  !*** ./src/img/temp/profile-picture.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "fce8215e8760882afa9f.png";
 
 /***/ })
 
@@ -637,6 +741,9 @@ const draw = {
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -662,6 +769,18 @@ const draw = {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -676,6 +795,52 @@ const draw = {
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		__webpack_require__.b = document.baseURI || self.location.href;
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"main": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		// no on chunks loaded
+/******/ 		
+/******/ 		// no jsonp function
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */
@@ -702,7 +867,10 @@ __webpack_require__.r(__webpack_exports__);
     console.log((0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('test', 'cringe', 'test2', 'cringe2', 'list item 2', 2, 1));
     (0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('test', 'cringe', 'test2', 'cringe2', 'list item 2', 2, 1);
     console.log((0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.getTaskList)());
-    _js_displayController__WEBPACK_IMPORTED_MODULE_2__["default"].addTask('test');
+    _js_displayController__WEBPACK_IMPORTED_MODULE_2__["default"].initialize();
+    _js_displayController__WEBPACK_IMPORTED_MODULE_2__["default"].addProject('test');
+    _js_displayController__WEBPACK_IMPORTED_MODULE_2__["default"].addButton();
+    _js_displayController__WEBPACK_IMPORTED_MODULE_2__["default"].addProfileImage();
 })();
 
 })();
