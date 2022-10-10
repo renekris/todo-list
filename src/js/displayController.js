@@ -1,10 +1,12 @@
 import profilePicture from "../img/temp/profile-picture.png";
 import { createProject } from "./createTask";
-import { getTaskList } from "./createTask";
+import { getTaskList, createTask } from "./createTask";
 
 // DOM CACHE
 const elContent = document.getElementById('content');
 const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
+const elModal = document.getElementById('modal');
+const elForm = document.getElementById('form');
 //
 
 
@@ -77,7 +79,7 @@ function createCard(task) {
 
 function createButton() {
     const elButton = document.createElement('button');
-    elButton.addEventListener('pointerdown', addCardModal);
+    elButton.addEventListener('pointerdown', eventAddCard);
     const elParentDiv = document.createElement('div');
     elParentDiv.className = 'add-button';
     elParentDiv.appendChild(elButton);
@@ -88,7 +90,38 @@ function addProfileImage() {
     elProfilePicture.src = profilePicture;
 }
 
-function addCardModal() {
+function displayModal() {
+    elModal.classList.remove('hidden');
+    elForm.addEventListener('submit', eventSubmit);
+}
+
+function eventSubmit(e) {
+    e.preventDefault();
+
+    const newData = e.target;
+
+    addCard(newData);
+    console.log(getTaskList());
+
+
+    elModal.classList.add('hidden');
+    elForm.removeEventListener('submit', eventSubmit);
+}
+
+function addCard(data) {
+    const taskData = [
+        data.title.value,
+        data.description.value,
+        data.dueDate.value,
+        data.priority.value,
+        data.notes.value,
+        data.checklist.value
+    ];
+    createTask(...taskData);
+}
+
+function eventAddCard() {
+    displayModal();
     console.log('test');
 }
 

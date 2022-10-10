@@ -50,6 +50,62 @@
         <footer class="footer">
             <p>© 2022 Renekris.</p>
         </footer>
-        <div id="modal" class="hidden"></div>
+        <div id="modal" class="hidden">
+            <div class="modal-content">
+                <fieldset>
+                    <form method="post" id="form">
+                        <label for="title">
+                            Title:
+                            <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                value="test 1"
+                            />
+                        </label>
+                        <label for="description">
+                            Description:
+                            <textarea
+                                name="description"
+                                id="description"
+                                cols="30"
+                                rows="10"
+                            >
+test 2</textarea
+                            >
+                        </label>
+                        <label for="due-date">
+                            <input type="date" name="dueDate" id="due-date" />
+                        </label>
+                        <label for="priority">
+                            Priority:
+                            <select name="priority" id="priority">
+                                <option value="1">Priority 1</option>
+                                <option value="2">Priority 2</option>
+                                <option value="3">Priority 3</option>
+                                <option value="4" selected>Priority 4</option>
+                            </select>
+                        </label>
+                        <label for="notes">
+                            <input
+                                type="text"
+                                name="notes"
+                                id="notes"
+                                value="test 5"
+                            />
+                        </label>
+                        <label for="checklist">
+                            <input
+                                type="text"
+                                name="checklist"
+                                id="checklist"
+                                value="test 6"
+                            />
+                        </label>
+                        <button type="submit">Submit</button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
     </body>
 </html>

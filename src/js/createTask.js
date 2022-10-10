@@ -23,10 +23,6 @@ class Task {
         this.notes = notes;
         this.checklist = checklist;
     }
-
-    updateTitle(title) {
-        this.title = title;
-    }
 }
 
 function createTask(title, description, dueDate, priority, notes, checklist) {

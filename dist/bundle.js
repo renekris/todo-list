@@ -22596,10 +22596,6 @@ class Task {
         this.notes = notes;
         this.checklist = checklist;
     }
-
-    updateTitle(title) {
-        this.title = title;
-    }
 }
 
 function createTask(title, description, dueDate, priority, notes, checklist) {
@@ -22638,6 +22634,8 @@ __webpack_require__.r(__webpack_exports__);
 // DOM CACHE
 const elContent = document.getElementById('content');
 const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
+const elModal = document.getElementById('modal');
+const elForm = document.getElementById('form');
 //
 
 
@@ -22710,7 +22708,7 @@ function createCard(task) {
 
 function createButton() {
     const elButton = document.createElement('button');
-    elButton.addEventListener('pointerdown', addCardModal);
+    elButton.addEventListener('pointerdown', eventAddCard);
     const elParentDiv = document.createElement('div');
     elParentDiv.className = 'add-button';
     elParentDiv.appendChild(elButton);
@@ -22721,7 +22719,38 @@ function addProfileImage() {
     elProfilePicture.src = _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__;
 }
 
-function addCardModal() {
+function displayModal() {
+    elModal.classList.remove('hidden');
+    elForm.addEventListener('submit', eventSubmit);
+}
+
+function eventSubmit(e) {
+    e.preventDefault();
+
+    const newData = e.target;
+
+    addCard(newData);
+    console.log((0,_createTask__WEBPACK_IMPORTED_MODULE_1__.getTaskList)());
+
+
+    elModal.classList.add('hidden');
+    elForm.removeEventListener('submit', eventSubmit);
+}
+
+function addCard(data) {
+    const taskData = [
+        data.title.value,
+        data.description.value,
+        data.dueDate.value,
+        data.priority.value,
+        data.notes.value,
+        data.checklist.value
+    ];
+    (0,_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)(...taskData);
+}
+
+function eventAddCard() {
+    displayModal();
     console.log('test');
 }
 
