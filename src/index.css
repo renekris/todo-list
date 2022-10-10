@@ -136,7 +136,17 @@ p {
 
 .task-wrapper {
     width: 80%;
-    background-color: #1d2d44;
+    background-color: var(--primary);
+}
+
+.card {
+    width: 100%;
+    height: fit-content;
+    background-color: var(--accent);
+}
+
+.card p {
+    color: #fff;
 }
 
 .add-button {

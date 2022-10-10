@@ -1,5 +1,6 @@
 import profilePicture from "../img/temp/profile-picture.png";
 import { createProject } from "./createTask";
+import { getTaskList } from "./createTask";
 
 // DOM CACHE
 const elContent = document.getElementById('content');
@@ -22,10 +23,10 @@ const draw = {
 }
 
 function createBase() {
+    const taskList = getTaskList();
     const elTaskWrapper = elContent.appendChild(createTaskWrapper());
-    const elTaskList = elTaskWrapper.appendChild(createTaskList());
+    const elTaskList = elTaskWrapper.appendChild(createTaskList(taskList));
     const elAddButton = elTaskList.appendChild(createButton());
-
 }
 
 function createTaskWrapper() {
@@ -34,10 +35,44 @@ function createTaskWrapper() {
     return taskWrapper;
 }
 
-function createTaskList() {
-    const taskList = document.createElement('div');
-    taskList.className = 'task-list';
-    return taskList;
+function createTaskList(taskList) {
+    const elTaskList = document.createElement('div');
+    elTaskList.className = 'task-list';
+
+    for (let i = 0; i < taskList.length; i++) {
+        const task = taskList[i];
+        elTaskList.appendChild(createCard(task));
+    }
+    return elTaskList;
+}
+
+function createCard(task) {
+    const dateFns = require('date-fns');
+    const elCard = document.createElement('div');
+    elCard.className = 'card';
+
+    const elTitle = elCard.appendChild(document.createElement('p'));
+    elTitle.textContent = task.title;
+
+    const elDescription = elCard.appendChild(document.createElement('p'));
+    elDescription.textContent = task.description;
+
+    const elDate = elCard.appendChild(document.createElement('p'));
+    elDate.textContent = dateFns.format(task.dueDate, 'dd-MM-yyyy');
+
+    const elPriority = elCard.appendChild(document.createElement('p'));
+    elPriority.textContent = task.priority;
+
+    const elNotes = elCard.appendChild(document.createElement('p'));
+    elNotes.textContent = task.notes;
+
+    const elChecklist = elCard.appendChild(document.createElement('p'));
+    elChecklist.textContent = task.checklist;
+
+
+    console.log(task);
+
+    return elCard;
 }
 
 function createButton() {
@@ -48,8 +83,6 @@ function createButton() {
     elParentDiv.appendChild(elButton);
     return elParentDiv;
 }
-
-
 
 function addProfileImage() {
     elProfilePicture.src = profilePicture;

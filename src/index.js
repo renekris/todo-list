@@ -3,8 +3,8 @@ import { getTaskList, createTask } from './js/createTask';
 import { initialize } from './js/displayController';
 
 (() => {
-    console.log(createTask('test', 'cringe', 'test2', 'cringe2', 'list item 2', 2, 1));
-    createTask('test', 'cringe', 'test2', 'cringe2', 'list item 2', 2, 1);
+    createTask('Go outside', 'Go outside and touch some grass', Date.now(), 5, ['no notes'], ['no checklist']);
+    createTask('Sleep', 'Jump onto your bed and take a nap', new Date('12.24.2022'), 5, ['no notes'], ['no checklist']);
     console.log(getTaskList());
     initialize();
     // draw.initialize();
