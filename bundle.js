@@ -22575,12 +22575,12 @@ let projectList = [];
 class Project {
     constructor(title, description, dueDate, priority, notes, checklist, tasks) {
         this.title = title;
-        this.description = description ?? '';
+        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
         this.checklist = checklist;
-        this.tasks = tasks ?? null;
+        this.tasks = tasks;
     }
 
 
@@ -22627,6 +22627,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
 /* harmony import */ var _createTask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createTask */ "./src/js/createTask.js");
+const dateFns = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+
 
 
 
@@ -22637,7 +22639,6 @@ const elProfilePicture = Array.from(document.getElementsByClassName('profile-pic
 const elModal = document.getElementById('modal');
 const elForm = document.getElementById('form');
 //
-
 
 
 function initialize() {
@@ -22660,6 +22661,10 @@ function createBase() {
     const elAddButton = elTaskList.appendChild(createButton());
 }
 
+function clearBase() {
+    elContent.innerHTML = '';
+}
+
 function createTaskWrapper() {
     const taskWrapper = document.createElement('div');
     taskWrapper.className = 'task-wrapper';
@@ -22668,7 +22673,7 @@ function createTaskWrapper() {
 
 function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
-    elTaskList.className = 'task-list';
+    elTaskList.id = 'task-list';
 
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
@@ -22678,7 +22683,6 @@ function createTaskList(taskList) {
 }
 
 function createCard(task) {
-    const dateFns = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
     const elCard = document.createElement('div');
     elCard.className = 'card';
 
@@ -22689,7 +22693,9 @@ function createCard(task) {
     elDescription.textContent = task.description;
 
     const elDate = elCard.appendChild(document.createElement('p'));
-    elDate.textContent = dateFns.format(task.dueDate, 'dd-MM-yyyy');
+    if (dateFns.isValid(task.dueDate)) {
+        elDate.textContent = dateFns.format(task.dueDate, 'MM-dd-yyyy');
+    } else elDate.textContent = task.dueDate;
 
     const elPriority = elCard.appendChild(document.createElement('p'));
     elPriority.textContent = task.priority;
@@ -22740,13 +22746,18 @@ function eventSubmit(e) {
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
     (0,_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)(...data);
+    clearBase();
+    createBase();
 }
 
 function serializeData(dirtyData) {
+    console.dir(`dirty data: ${dirtyData.dueDate.value}`)
     const data = [
         dirtyData.title.value,
         dirtyData.description.value,
-        dirtyData.dueDate.value,
+        dirtyData.dueDate.value === ''
+            ? Date.now()
+            : Date.parse(dirtyData.dueDate.value),
         dirtyData.priority.value,
         dirtyData.notes.value,
         dirtyData.checklist.value,
@@ -22933,8 +22944,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (() => {
-    (0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('Go outside', 'Go outside and touch some grass', Date.now(), 5, ['no notes'], ['no checklist']);
-    (0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('Sleep', 'Jump onto your bed and take a nap', new Date('12.24.2022'), 5, ['no notes'], ['no checklist']);
+    (0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('Go outside', 'Go outside and touch some grass', Date.now(), 1, ['no notes'], ['no checklist']);
+    (0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.createTask)('Sleep', 'Jump onto your bed and take a nap', new Date('12.24.2022'), 4, ['no notes'], ['no checklist']);
     console.log((0,_js_createTask__WEBPACK_IMPORTED_MODULE_1__.getTaskList)());
     (0,_js_displayController__WEBPACK_IMPORTED_MODULE_2__.initialize)();
     // draw.initialize();
