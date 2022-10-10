@@ -98,9 +98,9 @@ function displayModal() {
 function eventSubmit(e) {
     e.preventDefault();
 
-    const newData = e.target;
+    const dirtyData = e.target;
 
-    addCard(newData);
+    addCard(dirtyData);
     console.log(getTaskList());
 
 
@@ -108,16 +108,21 @@ function eventSubmit(e) {
     elForm.removeEventListener('submit', eventSubmit);
 }
 
-function addCard(data) {
-    const taskData = [
-        data.title.value,
-        data.description.value,
-        data.dueDate.value,
-        data.priority.value,
-        data.notes.value,
-        data.checklist.value
-    ];
-    createTask(...taskData);
+function addCard(dirtyData) {
+    const data = serializeData(dirtyData);
+    createTask(...data);
+}
+
+function serializeData(dirtyData) {
+    const data = [
+        dirtyData.title.value,
+        dirtyData.description.value,
+        dirtyData.dueDate.value,
+        dirtyData.priority.value,
+        dirtyData.notes.value,
+        dirtyData.checklist.value,
+    ]
+    return data;
 }
 
 function eventAddCard() {
