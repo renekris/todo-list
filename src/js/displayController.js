@@ -96,9 +96,24 @@ function addProfileImage() {
     elProfilePicture.src = profilePicture;
 }
 
-function displayModal() {
+function displayAddModal() {
     elModal.classList.remove('hidden');
+    elModal.classList.add('blur');
+    elModal.addEventListener('pointerdown', displayCancelModal);
     elForm.addEventListener('submit', eventSubmit);
+}
+
+function displayRemoveModal() {
+    elModal.classList.add('hidden');
+    elModal.classList.remove('blur');
+    elModal.removeEventListener('pointerdown', displayCancelModal);
+    elForm.removeEventListener('submit', eventSubmit);
+}
+
+function displayCancelModal(e) {
+    if (e.target.id === 'modal') {
+        displayRemoveModal();
+    }
 }
 
 function eventSubmit(e) {
@@ -109,9 +124,7 @@ function eventSubmit(e) {
     addCard(dirtyData);
     console.log(getTaskList());
 
-
-    elModal.classList.add('hidden');
-    elForm.removeEventListener('submit', eventSubmit);
+    displayRemoveModal();
 }
 
 function addCard(dirtyData) {
@@ -137,7 +150,7 @@ function serializeData(dirtyData) {
 }
 
 function eventAddCard() {
-    displayModal();
+    displayAddModal();
     console.log('test');
 }
 

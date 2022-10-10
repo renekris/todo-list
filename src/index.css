@@ -132,6 +132,7 @@ p {
     width: 100%;
     height: 100%;
     background-color: var(--primary);
+    overflow: auto;
 }
 
 .task-wrapper {
@@ -190,12 +191,50 @@ p {
 #modal {
     position: absolute;
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-    background-color: #1d2d44;
 }
 
 #modal.hidden {
     visibility: hidden;
     z-index: -100;
+}
+
+/* BLUR SUPPORT LIMITED */
+/* https://caniuse.com/?search=has */
+body:has(#modal.blur) > *:not(.blur) {
+    filter: blur(0.2rem);
+}
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: fit-content;
+    height: fit-content;
+
+    padding: 1rem;
+
+    background-color: var(--secondary);
+}
+
+.modal-content fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content label {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    width: 100%;
 }
