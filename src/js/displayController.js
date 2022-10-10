@@ -1,3 +1,5 @@
+const dateFns = require('date-fns');
+
 import profilePicture from "../img/temp/profile-picture.png";
 import { createProject } from "./createTask";
 import { getTaskList, createTask } from "./createTask";
@@ -8,7 +10,6 @@ const elProfilePicture = Array.from(document.getElementsByClassName('profile-pic
 const elModal = document.getElementById('modal');
 const elForm = document.getElementById('form');
 //
-
 
 
 function initialize() {
@@ -31,6 +32,10 @@ function createBase() {
     const elAddButton = elTaskList.appendChild(createButton());
 }
 
+function clearBase() {
+    elContent.innerHTML = '';
+}
+
 function createTaskWrapper() {
     const taskWrapper = document.createElement('div');
     taskWrapper.className = 'task-wrapper';
@@ -39,7 +44,7 @@ function createTaskWrapper() {
 
 function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
-    elTaskList.className = 'task-list';
+    elTaskList.id = 'task-list';
 
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
@@ -49,7 +54,6 @@ function createTaskList(taskList) {
 }
 
 function createCard(task) {
-    const dateFns = require('date-fns');
     const elCard = document.createElement('div');
     elCard.className = 'card';
 
@@ -60,7 +64,9 @@ function createCard(task) {
     elDescription.textContent = task.description;
 
     const elDate = elCard.appendChild(document.createElement('p'));
-    elDate.textContent = dateFns.format(task.dueDate, 'dd-MM-yyyy');
+    if (dateFns.isValid(task.dueDate)) {
+        elDate.textContent = dateFns.format(task.dueDate, 'MM-dd-yyyy');
+    } else elDate.textContent = task.dueDate;
 
     const elPriority = elCard.appendChild(document.createElement('p'));
     elPriority.textContent = task.priority;
@@ -111,13 +117,18 @@ function eventSubmit(e) {
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
     createTask(...data);
+    clearBase();
+    createBase();
 }
 
 function serializeData(dirtyData) {
+    console.dir(`dirty data: ${dirtyData.dueDate.value}`)
     const data = [
         dirtyData.title.value,
         dirtyData.description.value,
-        dirtyData.dueDate.value,
+        dirtyData.dueDate.value === ''
+            ? Date.now()
+            : Date.parse(dirtyData.dueDate.value),
         dirtyData.priority.value,
         dirtyData.notes.value,
         dirtyData.checklist.value,

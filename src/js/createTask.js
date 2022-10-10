@@ -2,12 +2,12 @@ let projectList = [];
 class Project {
     constructor(title, description, dueDate, priority, notes, checklist, tasks) {
         this.title = title;
-        this.description = description ?? '';
+        this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
         this.checklist = checklist;
-        this.tasks = tasks ?? null;
+        this.tasks = tasks;
     }
 
 
