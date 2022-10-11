@@ -57,24 +57,34 @@ function createCard(task) {
     const elCard = document.createElement('div');
     elCard.className = 'card';
 
+    // TITLE
     const elTitle = elCard.appendChild(document.createElement('p'));
+    elTitle.className = 'card-title';
     elTitle.textContent = task.title;
 
+    // DESCRIPTION
     const elDescription = elCard.appendChild(document.createElement('p'));
+    elDescription.className = 'card-description';
     elDescription.textContent = task.description;
 
+    // DATE
     const elDate = elCard.appendChild(document.createElement('p'));
+    elDate.className = 'card-dueDate';
     if (dateFns.isValid(task.dueDate)) {
         elDate.textContent = dateFns.format(task.dueDate, 'MM-dd-yyyy');
     } else elDate.textContent = task.dueDate;
 
-    const elPriority = elCard.appendChild(document.createElement('p'));
-    elPriority.textContent = task.priority;
+    // PRIORITY
+    elCard.classList.add(`priority-${task.priority}`);
 
+    // NOTES
     const elNotes = elCard.appendChild(document.createElement('p'));
+    elNotes.className = 'card-notes';
     elNotes.textContent = task.notes;
 
+    // CHECKLIST
     const elChecklist = elCard.appendChild(document.createElement('p'));
+    elChecklist.className = 'card-checkList';
     elChecklist.textContent = task.checklist;
 
 
