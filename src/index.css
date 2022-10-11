@@ -285,6 +285,7 @@ p {
     align-items: center;
     width: 100%;
     height: 100%;
+    z-index: 1000;
 }
 
 #modal.hidden {
@@ -306,8 +307,8 @@ body:has(#modal.blur) > *:not(.blur) {
     height: fit-content;
 
     padding: 1rem;
-
-    background-color: var(--secondary);
+    background-color: #ffffffdd;
+    border: 1px solid black;
 }
 
 .modal-content fieldset {
@@ -327,4 +328,8 @@ body:has(#modal.blur) > *:not(.blur) {
     flex-direction: column;
     margin: 0.5rem 0;
     width: 100%;
+}
+
+.modal-content label[for="title"] {
+    margin-top: 0;
 }
