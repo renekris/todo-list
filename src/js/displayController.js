@@ -94,11 +94,12 @@ function createCard(task) {
 }
 
 function createButton() {
-    const elButton = document.createElement('button');
-    elButton.addEventListener('pointerdown', eventAddCard);
     const elParentDiv = document.createElement('div');
     elParentDiv.className = 'add-button';
-    elParentDiv.appendChild(elButton);
+    const elButton = elParentDiv.appendChild(document.createElement('button'));
+    elButton.textContent = 'Create a new task';
+    elButton.addEventListener('pointerdown', eventAddCard);
+
     return elParentDiv;
 }
 
