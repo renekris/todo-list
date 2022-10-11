@@ -46,11 +46,18 @@ function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
     elTaskList.id = 'task-list';
 
+    let taskCount = 0;
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
-        if (task.completed === false) {
+        if (task.completed !== true) {
             elTaskList.appendChild(createCard(task));
+            taskCount++;
         }
+    }
+    if (taskCount === 0) {
+        const elSpan = elTaskList.insertBefore(document.createElement('span'), elTaskList.firstChild);
+        elSpan.textContent = 'Looks like you have no remaining tasks!';
+        elSpan.className = 'new-tasks-span';
     }
     return elTaskList;
 }
@@ -107,17 +114,17 @@ function createCardElements() {
     // COMPLETE
     const elCardComplete = elCardSettings.appendChild(document.createElement('button'));
     elCardComplete.className = 'card-complete';
-    elCardComplete.addEventListener('pointerdown', eventCompleteCard)
+    elCardComplete.addEventListener('pointerup', eventCompleteCard)
 
     // EDIT
     const elCardEdit = elCardSettings.appendChild(document.createElement('button'));
     elCardEdit.className = 'card-edit';
-    elCardEdit.addEventListener('pointerdown', eventEditCard)
+    elCardEdit.addEventListener('pointerup', eventEditCard)
 
     // MENU
     const elCardMenu = elCardSettings.appendChild(document.createElement('button'));
     elCardMenu.className = 'card-menu';
-    elCardMenu.addEventListener('pointerdown', eventMenuCard)
+    elCardMenu.addEventListener('pointerup', eventMenuCard)
 
     return elCardSettings;
 }

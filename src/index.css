@@ -147,6 +147,15 @@ p {
 
 #task-list {
     padding-top: 10%;
+    padding-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-tasks-span {
+    margin: 2rem 0;
 }
 
 .card {
