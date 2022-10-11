@@ -48,14 +48,18 @@ function createTaskList(taskList) {
 
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
-        elTaskList.appendChild(createCard(task));
+        if (task.completed === false) {
+            elTaskList.appendChild(createCard(task));
+        }
     }
     return elTaskList;
 }
 
 function createCard(task) {
+    // PARENT
     const elCard = document.createElement('div');
     elCard.className = 'card';
+    elCard.dataset.id = task.id;
 
     // TITLE
     const elTitle = elCard.appendChild(document.createElement('p'));
@@ -87,10 +91,58 @@ function createCard(task) {
     elChecklist.className = 'card-checkList';
     elChecklist.textContent = task.checklist;
 
+    // SETTINGS
+    elCard.appendChild(createCardElements());
 
     console.log(task);
 
     return elCard;
+}
+
+function createCardElements() {
+    // PARENT
+    const elCardSettings = document.createElement('div')
+    elCardSettings.className = 'card-settings';
+
+    // COMPLETE
+    const elCardComplete = elCardSettings.appendChild(document.createElement('button'));
+    elCardComplete.className = 'card-complete';
+    elCardComplete.addEventListener('pointerdown', eventCompleteCard)
+
+    // EDIT
+    const elCardEdit = elCardSettings.appendChild(document.createElement('button'));
+    elCardEdit.className = 'card-edit';
+    elCardEdit.addEventListener('pointerdown', eventEditCard)
+
+    // MENU
+    const elCardMenu = elCardSettings.appendChild(document.createElement('button'));
+    elCardMenu.className = 'card-menu';
+    elCardMenu.addEventListener('pointerdown', eventMenuCard)
+
+    return elCardSettings;
+}
+
+function eventCompleteCard(e) {
+    console.log(e.target.offsetParent.dataset.id);
+    const taskList = getTaskList();
+    for (let i = 0; i < taskList.length; i++) {
+        const task = taskList[i];
+        const TARGET_ID = e.target.offsetParent.dataset.id;
+        if (task.id === TARGET_ID) {
+            task.setCompleted(true);
+            break;
+        }
+    }
+    clearBase();
+    createBase();
+}
+
+function eventEditCard(e) {
+
+}
+
+function eventMenuCard(e) {
+
 }
 
 function createButton() {
