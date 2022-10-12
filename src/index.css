@@ -27,6 +27,7 @@
     --priority-3-transparent: #47b5ff33;
     --priority-4: #dddddd;
     --priority-4-transparent: #dddddd33;
+    --check-color: #33d140c7;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
@@ -163,17 +164,26 @@ p {
 }
 
 .card {
+    display: flex;
+    justify-content: center;
+    align-self: center;
     position: relative;
-    display: grid;
     margin: 0.5rem 0;
     padding: 0.5rem 0.5rem 0.5rem 1.5rem;
     width: 100%;
     height: fit-content;
-    grid-template-rows: 1fr 2fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr min-content;
     z-index: 5;
     border-radius: 0 15px 15px 0;
-    transition: 0.15s ease-out;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+.card:hover,
+.card:active,
+.card:focus-within {
+    /* (:hover::before - ::before) + card padding left = padding-left: 1.9;*/
+    padding-left: 2.1rem;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
 }
 
 .card::before {
@@ -185,16 +195,134 @@ p {
     height: 100%;
     width: 0.9rem;
     clip-path: inset(0 -100rem 0 0);
-    transition: 0.15s ease-out;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
 }
 
-.card:hover {
-    /* (:hover::before - ::before) + card padding left = padding-left: 1.7;*/
-    padding-left: 1.7rem;
+.card:hover::before,
+.card:active::before,
+.card:focus-within::before {
+    width: 1.5rem;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
+    background-color: var(--check-color) !important;
 }
 
-.card:hover::before {
-    width: 1.1rem;
+.card-complete {
+    display: flex;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: auto;
+    padding: 0;
+    flex: 1;
+}
+
+.card-complete-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    /* margin left has to be equal to .card:hover padding-left */
+    margin: auto 0 auto -2.1rem;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(./img/svg/done_FILL0_wght400_GRAD0_opsz48.svg);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
+
+    /* animation */
+    background-position: -2rem;
+}
+
+.card:hover .card-complete-button,
+.card:active .card-complete-button,
+.card:focus-within .card-complete-button {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.2s cubic-bezier(0, 0, 0, 1);
+
+    /* centers image */
+    background-position: center;
+}
+
+.card-data {
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr min-content;
+    width: 100%;
+    margin-left: 0.15rem;
+}
+
+.card-title {
+    grid-area: 1 / 1 / 2 / -2;
+}
+
+.card-description {
+    grid-area: 2 / 1 / 3 / -1;
+}
+
+.card-settings {
+    grid-area: 1 / 4 / span 1 / -1;
+    display: flex;
+    justify-content: space-around;
+    visibility: hidden;
+}
+
+.card:hover .card-settings,
+.card:active .card-settings,
+.card:focus-within .card-settings {
+    visibility: visible;
+}
+
+.card-edit,
+.card-menu {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Give settings below card:hover */
+
+.card-edit {
+    background-image: url(./img/svg/edit_FILL0_wght400_GRAD0_opsz48.svg);
+}
+
+.card-menu {
+    background-image: url(./img/svg/expand_more_FILL0_wght400_GRAD0_opsz48.svg);
+}
+
+.add-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 1.75rem;
+    /* border-top: #000 solid 1px; */
+}
+
+.add-button button {
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
+    background-repeat: no-repeat;
+    background-size: contain; */
+    background-color: var(--content-background);
+
+    border: none;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    text-decoration-line: underline;
 }
 
 .card.priority-1 {
@@ -236,55 +364,6 @@ p {
 .card p {
     color: var(--text-color);
     margin: 0;
-}
-
-.card-title {
-    grid-area: 1 / 1 / 1 / -2;
-}
-
-.card-description {
-    grid-area: 2 / 1 / 3 / -2;
-}
-
-.card-settings {
-    grid-area: 1 / 4 / -1 / -1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-.card-complete,
-.card-edit,
-.card-menu {
-    width: 1rem;
-    height: 1rem;
-}
-
-.add-button {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 1.75rem;
-    /* border-top: #000 solid 1px; */
-}
-
-.add-button button {
-    font-weight: bold;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    /* background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
-    background-repeat: no-repeat;
-    background-size: contain; */
-    background-color: var(--content-background);
-
-    border: none;
-    cursor: pointer;
-}
-
-.add-button:hover {
-    text-decoration-line: underline;
 }
 
 /* FOOTER */

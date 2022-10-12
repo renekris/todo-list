@@ -68,18 +68,29 @@ function createCard(task) {
     elCard.className = 'card';
     elCard.dataset.id = task.id;
 
+    // COMPLETE
+    const elCardComplete = elCard.appendChild(document.createElement('div'));
+    elCardComplete.className = 'card-complete';
+    const elCardCompleteButton = elCardComplete.appendChild(document.createElement('button'));
+    elCardCompleteButton.className = 'card-complete-button';
+    elCardCompleteButton.addEventListener('pointerup', eventCompleteCard);
+
+    // DATA PARENT
+    const elCardData = elCard.appendChild(document.createElement('div'));
+    elCardData.className = 'card-data';
+
     // TITLE
-    const elTitle = elCard.appendChild(document.createElement('p'));
+    const elTitle = elCardData.appendChild(document.createElement('p'));
     elTitle.className = 'card-title';
     elTitle.textContent = task.title;
 
     // DESCRIPTION
-    const elDescription = elCard.appendChild(document.createElement('p'));
+    const elDescription = elCardData.appendChild(document.createElement('p'));
     elDescription.className = 'card-description';
     elDescription.textContent = task.description;
 
     // DATE
-    const elDate = elCard.appendChild(document.createElement('p'));
+    const elDate = elCardData.appendChild(document.createElement('p'));
     elDate.className = 'card-dueDate';
     if (dateFns.isValid(task.dueDate)) {
         elDate.textContent = dateFns.format(task.dueDate, 'MM-dd-yyyy');
@@ -89,17 +100,17 @@ function createCard(task) {
     elCard.classList.add(`priority-${task.priority}`);
 
     // NOTES
-    const elNotes = elCard.appendChild(document.createElement('p'));
+    const elNotes = elCardData.appendChild(document.createElement('p'));
     elNotes.className = 'card-notes';
     elNotes.textContent = task.notes;
 
     // CHECKLIST
-    const elChecklist = elCard.appendChild(document.createElement('p'));
+    const elChecklist = elCardData.appendChild(document.createElement('p'));
     elChecklist.className = 'card-checkList';
     elChecklist.textContent = task.checklist;
 
     // SETTINGS
-    elCard.appendChild(createCardElements());
+    elCardData.appendChild(createCardElements());
 
     console.log(task);
 
@@ -110,11 +121,6 @@ function createCardElements() {
     // PARENT
     const elCardSettings = document.createElement('div')
     elCardSettings.className = 'card-settings';
-
-    // COMPLETE
-    const elCardComplete = elCardSettings.appendChild(document.createElement('button'));
-    elCardComplete.className = 'card-complete';
-    elCardComplete.addEventListener('pointerup', eventCompleteCard)
 
     // EDIT
     const elCardEdit = elCardSettings.appendChild(document.createElement('button'));
