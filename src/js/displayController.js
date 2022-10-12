@@ -136,26 +136,111 @@ function createCardElements() {
 }
 
 function eventCompleteCard(e) {
-    console.log(e.target.offsetParent.dataset.id);
-    const taskList = getTaskList();
-    for (let i = 0; i < taskList.length; i++) {
-        const task = taskList[i];
-        const TARGET_ID = e.target.offsetParent.dataset.id;
-        if (task.id === TARGET_ID) {
-            task.setCompleted(true);
-            break;
-        }
-    }
+    const TARGET_ID = e.target.offsetParent.dataset.id;
+    getTaskById(TARGET_ID).setCompleted(true);
     clearBase();
     createBase();
 }
 
-function eventEditCard(e) {
+function getTaskById(id) {
+    const taskList = getTaskList();
+    for (let i = 0; i < taskList.length; i++) {
+        const task = taskList[i];
+        if (task.id === id) {
+            return task;
+        }
+    }
+}
 
+function eventEditCard(e) {
+    console.log(e.target.offsetParent.dataset.id);
+    const TARGET_ID = e.target.offsetParent.dataset.id;
+    const elCardData = document.querySelector(`[data-id=\'${TARGET_ID}\'] .card-data`);
+    const elCard = elCardData.offsetParent;
+    elCard.classList.remove('card');
+    elCard.classList.add('editing'); //replace everything with value
+    elCard.innerHTML = '';
+
+    const task = getTaskById(TARGET_ID);
+    elCard.appendChild(createCardEdit(task));
+}
+
+function createCardEdit(task) {
+    const elParentDiv = document.createElement('form');
+
+    // TITLE
+    const elTitle = elParentDiv.appendChild(document.createElement('input'));
+    elTitle.value = task.title;
+    elTitle.type = 'text';
+
+    // DESCRIPTION
+    const elDescription = elParentDiv.appendChild(document.createElement('textarea'));
+    elDescription.value = task.description;
+
+    // DATE
+    const elDate = elParentDiv.appendChild(document.createElement('input'));
+    elDate.type = 'date';
+    elDate.value = new Date(task.dueDate).toISOString().split('T')[0];
+
+    // PRIORITY
+    const elPriority = elParentDiv.appendChild(document.createElement('select'));
+    const elOptionPriority1 = elPriority.appendChild(document.createElement('option'));
+    elOptionPriority1.value = '1';
+    elOptionPriority1.text = 'Priority 1';
+    const elOptionPriority2 = elPriority.appendChild(document.createElement('option'));
+    elOptionPriority2.value = '2';
+    elOptionPriority2.text = 'Priority 2';
+    const elOptionPriority3 = elPriority.appendChild(document.createElement('option'));
+    elOptionPriority3.value = '3';
+    elOptionPriority3.text = 'Priority 3';
+    const elOptionPriority4 = elPriority.appendChild(document.createElement('option'));
+    elOptionPriority4.value = '4';
+    elOptionPriority4.text = 'Priority 4';
+    for (let i = 0; i < elPriority.length; i++) {
+        const element = elPriority[i];
+        if (task.priority == element.value) {
+            element.selected = true;
+            break;
+        }
+    }
+
+    // CANCEL
+    const elCancel = elParentDiv.appendChild(document.createElement('button'));
+    elCancel.textContent = 'Cancel';
+    // add cancel card when clicking outside of the card
+    elCancel.addEventListener('pointerdown', eventCancelCard);
+
+    // SUBMIT
+    const elSubmit = elParentDiv.appendChild(document.createElement('button'));
+    elSubmit.textContent = 'Save';
+    elSubmit.type = 'submit';
+    elParentDiv.addEventListener('submit', eventSaveCard);
+
+    return elParentDiv;
+}
+
+function eventSaveCard(e) {
+    e.preventDefault();
+    const TARGET_ID = e.target.offsetParent.dataset.id;
+    const task = getTaskById(TARGET_ID);
+
+    task.title = e.target[0].value;
+    task.description = e.target[1].value;
+    task.dueDate = e.target[2].value;
+    task.priority = e.target[3].value;
+
+    clearBase();
+    createBase();
+}
+
+function eventCancelCard() {
+    clearBase();
+    createBase();
 }
 
 function eventMenuCard(e) {
-
+    console.log(e.target.offsetParent.dataset.id);
+    const TARGET_ID = e.target.offsetParent.dataset.id;
 }
 
 function createButton() {

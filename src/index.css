@@ -321,7 +321,7 @@ p {
     text-decoration-line: underline;
 }
 
-.card.priority-1 {
+.priority-1 {
     background: linear-gradient(
         90deg,
         rgba(209, 51, 51, 0) 0%,
@@ -329,12 +329,12 @@ p {
     );
 }
 
-.card.priority-1::before {
+.priority-1::before {
     background-color: var(--priority-1);
     box-shadow: -2px 0 1.25rem 0.25rem var(--priority-1);
 }
 
-.card.priority-2 {
+.priority-2 {
     background: linear-gradient(
         90deg,
         rgba(253, 132, 31, 0) 0%,
@@ -342,12 +342,12 @@ p {
     );
 }
 
-.card.priority-2::before {
+.priority-2::before {
     background-color: var(--priority-2);
     box-shadow: -2px 0 1.25rem 0.25rem var(--priority-2);
 }
 
-.card.priority-3 {
+.priority-3 {
     background: linear-gradient(
         90deg,
         rgba(71, 181, 255, 0) 0%,
@@ -355,12 +355,12 @@ p {
     );
 }
 
-.card.priority-3::before {
+.priority-3::before {
     background-color: var(--priority-3);
     box-shadow: -2px 0 1.25rem 0.25rem var(--priority-3);
 }
 
-.card.priority-4 {
+.priority-4 {
     background: linear-gradient(
         90deg,
         rgba(221, 221, 221, 0) 0%,
@@ -368,7 +368,7 @@ p {
     );
 }
 
-.card.priority-4::before {
+.priority-4::before {
     background-color: var(--priority-4);
     box-shadow: -2px 0 1.25rem 0.25rem var(--priority-4);
 }
@@ -376,6 +376,32 @@ p {
 .card p {
     color: var(--text-color);
     margin: 0;
+}
+
+/* EDITING A CARD */
+
+#task-list > div.editing {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    position: relative;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    width: 100%;
+    height: fit-content;
+    z-index: 5;
+    border-radius: 0 15px 15px 0;
+}
+
+#task-list > div.editing::before {
+    z-index: -100;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0.9rem;
+    clip-path: inset(0 -100rem 0 0);
 }
 
 /* FOOTER */
