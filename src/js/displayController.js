@@ -93,7 +93,7 @@ function createCard(task) {
     const elDate = elCardData.appendChild(document.createElement('p'));
     elDate.className = 'card-dueDate';
     if (dateFns.isValid(task.dueDate)) {
-        elDate.textContent = dateFns.format(task.dueDate, 'MM-dd-yyyy');
+        elDate.textContent = dateFns.format(task.dueDate, 'yyyy-MM-dd');
     } else elDate.textContent = task.dueDate;
 
     // PRIORITY
