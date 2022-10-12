@@ -81,6 +81,36 @@ p {
     color: #000000;
 }
 
+.manage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.manage-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.manage-add {
+    width: 2rem;
+    height: 2rem;
+    background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
+    background-color: transparent;
+    background-position: no-repeat;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    transition: 0.1s cubic-bezier(0, 0, 0, 1);
+    filter: drop-shadow(0 0 0.5rem);
+}
+
+.manage-add:hover {
+    scale: 1.1;
+    filter: drop-shadow(0 0 0.7rem);
+}
+
 .personal,
 .user {
     display: flex;

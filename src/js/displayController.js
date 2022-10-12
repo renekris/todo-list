@@ -13,9 +13,10 @@ const elForm = document.getElementById('form');
 
 
 function initialize() {
+    const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
+    headerAddButton.addEventListener('pointerdown', eventAddCard);
     addProfileImage();
     createBase();
-
 }
 
 const draw = {
@@ -106,8 +107,6 @@ function createCard(task) {
 
     // SETTINGS
     elCardData.appendChild(createCardElements());
-
-    console.log(task);
 
     return elCard;
 }
@@ -211,7 +210,6 @@ function createCardEdit(task) {
     const elCancel = elButtons.appendChild(document.createElement('button'));
     elCancel.className = 'cancel';
     elCancel.textContent = 'Cancel';
-    // add cancel card when clicking outside of the card
     elCancel.addEventListener('pointerdown', eventCancelCard);
 
     // SUBMIT
