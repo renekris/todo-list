@@ -15,15 +15,13 @@ class Project {
 
 let taskList = [];
 class Task {
-    constructor(title, description, dueDate, priority, notes, checklist) {
+    constructor(title, description, dueDate, priority) {
         this.id = crypto.randomUUID();
 
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.notes = notes;
-        this.checklist = checklist;
         this.completed = false;
     }
 
@@ -36,8 +34,8 @@ class Task {
     }
 }
 
-function createTask(title, description, dueDate, priority, notes, checklist) {
-    return taskList.push(new Task(title, description, dueDate, priority, notes, checklist));
+function createTask(title, description, dueDate, priority) {
+    return taskList.push(new Task(title, description, dueDate, priority));
 }
 
 function createProject(title, description, dueDate, priority, notes, checklist, tasks) {

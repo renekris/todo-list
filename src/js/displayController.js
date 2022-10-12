@@ -99,15 +99,10 @@ function createCard(task) {
     // PRIORITY
     elCard.classList.add(`priority-${task.priority}`);
 
-    // NOTES
-    const elNotes = elCardData.appendChild(document.createElement('p'));
-    elNotes.className = 'card-notes';
-    elNotes.textContent = task.notes;
-
-    // CHECKLIST
-    const elChecklist = elCardData.appendChild(document.createElement('p'));
-    elChecklist.className = 'card-checkList';
-    elChecklist.textContent = task.checklist;
+    // PROJECT
+    const elProject = elCardData.appendChild(document.createElement('p'));
+    elProject.className = 'card-project';
+    // elProject.textContent = task.notes;
 
     // SETTINGS
     elCardData.appendChild(createCardElements());
@@ -170,20 +165,24 @@ function createCardEdit(task) {
 
     // TITLE
     const elTitle = elParentDiv.appendChild(document.createElement('input'));
+    elTitle.className = 'title';
     elTitle.value = task.title;
     elTitle.type = 'text';
 
     // DESCRIPTION
     const elDescription = elParentDiv.appendChild(document.createElement('textarea'));
+    elDescription.className = 'description';
     elDescription.value = task.description;
 
     // DATE
     const elDate = elParentDiv.appendChild(document.createElement('input'));
+    elDate.className = 'dueDate';
     elDate.type = 'date';
     elDate.value = new Date(task.dueDate).toISOString().split('T')[0];
 
     // PRIORITY
     const elPriority = elParentDiv.appendChild(document.createElement('select'));
+    elPriority.className = 'priority';
     const elOptionPriority1 = elPriority.appendChild(document.createElement('option'));
     elOptionPriority1.value = '1';
     elOptionPriority1.text = 'Priority 1';
@@ -204,14 +203,20 @@ function createCardEdit(task) {
         }
     }
 
+    // PARENT
+    const elButtons = elParentDiv.appendChild(document.createElement('div'));
+    elButtons.className = 'buttons';
+
     // CANCEL
-    const elCancel = elParentDiv.appendChild(document.createElement('button'));
+    const elCancel = elButtons.appendChild(document.createElement('button'));
+    elCancel.className = 'cancel';
     elCancel.textContent = 'Cancel';
     // add cancel card when clicking outside of the card
     elCancel.addEventListener('pointerdown', eventCancelCard);
 
     // SUBMIT
-    const elSubmit = elParentDiv.appendChild(document.createElement('button'));
+    const elSubmit = elButtons.appendChild(document.createElement('button'));
+    elSubmit.className = 'submit';
     elSubmit.textContent = 'Save';
     elSubmit.type = 'submit';
     elParentDiv.addEventListener('submit', eventSaveCard);
