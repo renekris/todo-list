@@ -7,7 +7,12 @@ const elContent = document.getElementById('content');
 
 function initialize() {
     addHeaderData();
+    addSidebarData();
     createBase();
+}
+
+function addSidebarData() {
+
 }
 
 function createBase() {

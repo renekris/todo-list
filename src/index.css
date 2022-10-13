@@ -129,26 +129,25 @@ p {
 
 /* SIDEBAR */
 
-.sidebar {
+#sidebar {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     background-color: var(--sidebar);
 }
 
-.sidebar nav,
-.sidebar button,
-.sidebar ul {
+#sidebar nav,
+#sidebar button,
+#sidebar ul {
     width: 100%;
 }
 
-.sidebar li {
+#sidebar li {
     display: flex;
     justify-content: center;
-    margin: 1rem;
 }
 
-.nav-button {
+.nav-button button {
     height: 2rem;
     border: none;
     cursor: pointer;
@@ -156,8 +155,26 @@ p {
     background-color: var(--sidebar);
 }
 
-.nav-button:hover {
+.nav-button button:hover {
     background-color: var(--content-background);
+}
+
+.projects-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.projects-header h4 {
+    margin: 0.25rem 0;
+}
+
+#projects {
+    width: 100%;
+    margin: 0;
 }
 
 /* CONTENT */
