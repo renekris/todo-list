@@ -25,28 +25,25 @@
                 </div>
             </div>
         </header>
-        <div class="sidebar">
-            <nav>
+        <div id="sidebar">
+            <nav class="nav-button">
                 <ul>
                     <li>
-                        <button class="nav-button" id="button-today">
-                            Today
-                        </button>
+                        <button id="button-home">Today</button>
                     </li>
                     <li>
-                        <button class="nav-button" id="button-upcoming">
-                            Upcoming
-                        </button>
+                        <button id="button-upcoming">Upcoming 7d</button>
                     </li>
                     <li>
-                        <button class="nav-button" id="button-priority">
-                            Priorities
-                        </button>
+                        <button id="button-priority">Priorities</button>
                     </li>
-                    <li>
-                        <button class="nav-button" id="button-projects">
-                            Projects
-                        </button>
+                    <li class="projects-header">
+                        <h4>Projects</h4>
+                        <div id="projects">
+                            <button class="project" data-id="random-long-id">
+                                Default Project
+                            </button>
+                        </div>
                     </li>
                 </ul>
             </nav>
