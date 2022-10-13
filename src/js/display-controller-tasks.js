@@ -1,6 +1,6 @@
 const dateFns = require('date-fns');
 
-import { getTaskList, createTask } from "./data-db";
+import { getTaskList, getProjectList, createTask } from "./data-db";
 import { clearContent } from "./display-controller";
 
 const elContent = document.getElementById('content');
@@ -14,19 +14,20 @@ function createBase() {
 
 function createTaskWrapper() {
     const taskWrapper = document.createElement('div');
-    taskWrapper.className = 'task-wrapper';
+    taskWrapper.className = 'wrapper';
 
     return taskWrapper;
 }
 
-function createTaskList(taskList) {
+function createTaskList(taskList, classIdentifier = 'home') {
     const elTaskList = document.createElement('div');
     elTaskList.id = 'task-list';
+    elTaskList.className = classIdentifier;
 
     let taskCount = 0;
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
-        if (task.completed !== true) {
+        if (task.isCompleted !== true) {
             elTaskList.appendChild(createCard(task));
             taskCount++;
         }
@@ -117,7 +118,7 @@ function createCardButtons() {
 
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
-    getTaskById(TARGET_ID).setCompleted(true);
+    getTaskById(TARGET_ID).setIsCompleted(true);
     clearContent();
     createBase();
 }
@@ -187,7 +188,22 @@ function createCardEdit(task) {
         }
     }
 
-    // PARENT
+    // PROJECT
+    const projects = getProjectList();
+    const elProjectSelect = elParentDiv.appendChild(document.createElement('select'));
+    for (let i = 0; i < projects.length; i++) {
+        const project = projects[i];
+        const elOption = elProjectSelect.appendChild(document.createElement('option'));
+        elOption.text = project.title;
+        elOption.value = project.id;
+        // Implement this when gh-3 is done
+        // if (condition) {
+        //     elOption.selected = true;
+        // }
+    }
+
+
+    // BUTTONS PARENT
     const elButtons = elParentDiv.appendChild(document.createElement('div'));
     elButtons.className = 'buttons';
 
@@ -211,14 +227,25 @@ function eventSaveCard(e) {
     e.preventDefault();
     const TARGET_ID = e.target.offsetParent.dataset.id;
     const task = getTaskById(TARGET_ID);
+    const elCard = e.target.offsetParent;
 
     task.title = e.target[0].value;
     task.description = e.target[1].value;
     task.dueDate = e.target[2].value;
     task.priority = e.target[3].value;
 
-    const elCard = e.target.offsetParent;
+    if (task.parentProjectId !== e.target[4].value) {
+        task.setParentProjectId(e.target[4].value);
+        // To make it look like card gets removed if card is being viewed from a project and its value gets changed
+        if (elCard.parentElement.className === 'project') {
+            elCard.remove();
+        }
+    }
+
     elCard.replaceWith(createCard(task));
+
+    console.dir(getProjectList());
+    console.dir(getTaskList());
 }
 
 function eventCancelCard(e) {
@@ -300,4 +327,4 @@ function serializeData(dirtyData) {
     return data;
 }
 
-export { createBase, eventAddModal };
+export { createBase, eventAddModal, createTaskList };

@@ -1,19 +1,21 @@
 let projectList = [];
 class Project {
-    constructor(title, description) {
+    constructor(title, description, isDefault) {
         this.id = crypto.randomUUID();
 
         this.title = title;
         this.description = description;
         this.tasks = [];
-        this.completed = false;
+        this.isCompleted = false;
+
+        this.isDefault = isDefault || false;
     }
 
-    setCompleted(value) {
-        this.completed = value;
+    setIsCompleted(value) {
+        this.isCompleted = value;
     }
-    addTaskToProject(id) {
-        this.tasks.push(id);
+    addTaskToProject(title, description, dueDate, priority) {
+        this.tasks.push(new Task(title, description, dueDate, priority, this.id));
     }
     deleteTaskFromProject(id) {
         index = this.tasks.indexOf(id);
@@ -23,44 +25,72 @@ class Project {
     }
 }
 
-function createProject(title, description) {
-    return projectList.push(new Project(title, description));
+function createProject(title, description, isDefault) {
+    return projectList.push(new Project(title, description, isDefault));
 }
 
 function getProjectList() {
     return projectList;
 }
 
+// MAKE EVERYTHING COMPATIBLE WITHOUT taskList
 let taskList = [];
 class Task {
-    constructor(title, description, dueDate, priority, parentProject) {
+    constructor(title, description, dueDate, priority, parentProjectId) {
         this.id = crypto.randomUUID();
 
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.completed = false;
+        this.isCompleted = false;
 
-        this.parentProject = parentProject || null;
+        this.parentProjectId = parentProjectId || null;
     }
 
-    setCompleted(value) {
-        this.completed = value;
+    setIsCompleted(value) {
+        this.isCompleted = value;
     }
-    setParentProject(id) {
-        this.parentProject = id;
-        const index = projectList.findIndex(project => {
-            return project.id === id;
+    setParentProjectId(projectId) {
+        if (this.parentProjectId !== null) {
+            this.removeTaskFromProject();
+        }
+        this.addTaskToProject(projectId);
+        this.parentProjectId = projectId;
+    }
+    removeTaskFromProject() {
+        const projectIndex = projectList.findIndex(project => {
+            return project.id === this.parentProjectId;
         });
-        projectList[index].tasks.push(id);
+
+        const projectTaskIndex = projectList[projectIndex].tasks.findIndex(projectTask => {
+            return projectTask.id === this.id;
+        })
+
+        if (projectTaskIndex > -1) {
+            projectList[projectIndex].tasks.splice(projectTaskIndex, 1);
+        }
+    }
+    addTaskToProject(projectId) {
+        const projectIndex = projectList.findIndex(project => {
+            return project.id === projectId;
+        });
+        projectList[projectIndex].tasks.push(this);
     }
 }
 
 function createTask(title, description, dueDate, priority) {
-    return taskList.push(new Task(title, description, dueDate, priority));
+    // new cards get pushed to "default" project
+    const projectIndex = projectList.findIndex(project => {
+        return project.isDefault === true;
+    });
+    if (projectIndex > -1) {
+        let task = new Task(title, description, dueDate, priority);
+        const projectId = projectList[projectIndex].id;
+        task.setParentProjectId(projectId);
+        return taskList.push(task);
+    }
 }
-
 
 function getTaskList() {
     return taskList;

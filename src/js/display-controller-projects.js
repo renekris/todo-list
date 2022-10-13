@@ -1,32 +1,47 @@
 import { getProjectList } from "./data-db";
 import { clearContent } from "./display-controller";
+import { createTaskList } from "./display-controller-tasks";
 
 const elContent = document.getElementById('content');
 
-function displayProject(index) {
+function displayProject(projectIndex) {
     clearContent();
 
-    const elProject = elContent.appendChild(createProject(index));
+    const elProject = elContent.appendChild(createProject(projectIndex));
 }
 
-function createProject(index) {
+function createProject(projectIndex) {
     const projects = getProjectList();
-    const project = projects[index];
+    const project = projects[projectIndex];
 
     // PARENT
     const elProject = document.createElement('div');
-    elProject.className = 'project';
+    elProject.className = 'project wrapper';
 
-    console.log(index);
     // TITLE
     const elTitle = elProject.appendChild(document.createElement('h1'));
     elTitle.textContent = project.title;
+    elTitle.className = 'project-title';
 
     // DESCRIPTION
     const elDescription = elProject.appendChild(document.createElement('p'));
     elDescription.textContent = project.description;
+    elDescription.className = 'project-description';
+
+    //// TASKS
+    const elTasks = elProject.appendChild(document.createElement('div'));
+    elTasks.className = 'project-tasks';
+
+    elTasks.appendChild(createProjectCards(project.tasks));
 
     return elProject;
 }
 
-export { displayProject };
+function createProjectCards(taskList) {
+    const elTask = document.createElement('div');
+    elTask.className = 'task';
+
+    return createTaskList(taskList, 'project');
+}
+
+export { displayProject, createProject };

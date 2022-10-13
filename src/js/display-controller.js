@@ -39,10 +39,10 @@ function clearContent() {
 
 function eventProjectButtonClicked(e) {
     const projects = getProjectList();
-    const index = projects.findIndex(project => {
+    const projectIndex = projects.findIndex(project => {
         return project.id === e.target.dataset.id;
     })
-    displayProject(index);
+    displayProject(projectIndex);
 }
 
 function eventDisplayHome() {
