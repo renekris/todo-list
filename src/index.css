@@ -103,12 +103,10 @@ p {
     border: none;
     cursor: pointer;
     transition: 0.1s cubic-bezier(0, 0, 0, 1);
-    filter: drop-shadow(0 0 0.5rem);
 }
 
 .manage-add:hover {
-    scale: 1.1;
-    filter: drop-shadow(0 0 0.7rem);
+    scale: 1.05;
 }
 
 .personal,

@@ -1,14 +1,9 @@
 const dateFns = require('date-fns');
 
 import profilePicture from "../img/temp/profile-picture.png";
-import { getTaskList, createTask, createProject } from "./createTask";
+import { getTaskList, createTask, createProject } from "./data-db";
 
-// DOM CACHE
 const elContent = document.getElementById('content');
-const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
-const elModal = document.getElementById('modal');
-const elForm = document.getElementById('form');
-
 
 function initialize() {
     addHeaderData();
@@ -258,20 +253,28 @@ function createButton() {
 function addHeaderData() {
     const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
     headerAddButton.addEventListener('pointerdown', eventAddCard);
+
+    const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
     elProfilePicture.src = profilePicture;
 }
 
 function displayAddModal() {
+    const elModal = document.getElementById('modal');
     elModal.classList.remove('hidden');
     elModal.classList.add('blur');
     elModal.addEventListener('pointerdown', displayCancelModal);
+
+    const elForm = document.getElementById('form');
     elForm.addEventListener('submit', eventModalSubmit);
 }
 
 function displayRemoveModal() {
+    const elModal = document.getElementById('modal');
     elModal.classList.add('hidden');
     elModal.classList.remove('blur');
     elModal.removeEventListener('pointerdown', displayCancelModal);
+
+    const elForm = document.getElementById('form');
     elForm.removeEventListener('submit', eventModalSubmit);
 }
 
