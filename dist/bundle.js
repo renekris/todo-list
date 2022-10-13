@@ -22647,27 +22647,16 @@ const dateFns = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm
 
 
 
-
 // DOM CACHE
 const elContent = document.getElementById('content');
 const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
 const elModal = document.getElementById('modal');
 const elForm = document.getElementById('form');
-//
 
 
 function initialize() {
-    const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
-    headerAddButton.addEventListener('pointerdown', eventAddCard);
-    addProfileImage();
+    addHeaderData();
     createBase();
-}
-
-const draw = {
-    addProject(data) {
-        console.log(data);
-        (0,_createTask__WEBPACK_IMPORTED_MODULE_1__.createProject)(data);
-    },
 }
 
 function createBase() {
@@ -22684,6 +22673,7 @@ function clearBase() {
 function createTaskWrapper() {
     const taskWrapper = document.createElement('div');
     taskWrapper.className = 'task-wrapper';
+
     return taskWrapper;
 }
 
@@ -22704,24 +22694,34 @@ function createTaskList(taskList) {
         elSpan.textContent = 'Looks like you have no remaining tasks!';
         elSpan.className = 'new-tasks-span';
     }
+
     return elTaskList;
 }
 
 function createCard(task) {
-    // PARENT
     const elCard = document.createElement('div');
     elCard.className = 'card';
     elCard.dataset.id = task.id;
 
-    // COMPLETE
-    const elCardComplete = elCard.appendChild(document.createElement('div'));
+    elCard.appendChild(createCardCompleteButton(elCard));
+    elCard.appendChild(createCardData(task, elCard));
+
+    return elCard;
+}
+
+function createCardCompleteButton() {
+    const elCardComplete = document.createElement('div');
     elCardComplete.className = 'card-complete';
     const elCardCompleteButton = elCardComplete.appendChild(document.createElement('button'));
     elCardCompleteButton.className = 'card-complete-button';
     elCardCompleteButton.addEventListener('pointerup', eventCompleteCard);
 
+    return elCardComplete;
+}
+
+function createCardData(task, elParent) {
     // DATA PARENT
-    const elCardData = elCard.appendChild(document.createElement('div'));
+    const elCardData = document.createElement('div');
     elCardData.className = 'card-data';
 
     // TITLE
@@ -22742,7 +22742,7 @@ function createCard(task) {
     } else elDate.textContent = task.dueDate;
 
     // PRIORITY
-    elCard.classList.add(`priority-${task.priority}`);
+    elParent.classList.add(`priority-${task.priority}`);
 
     // PROJECT
     const elProject = elCardData.appendChild(document.createElement('p'));
@@ -22750,27 +22750,27 @@ function createCard(task) {
     // elProject.textContent = task.notes;
 
     // SETTINGS
-    elCardData.appendChild(createCardElements());
+    elCardData.appendChild(createCardButtons());
 
-    return elCard;
+    return elCardData;
 }
 
-function createCardElements() {
+function createCardButtons() {
     // PARENT
-    const elCardSettings = document.createElement('div')
-    elCardSettings.className = 'card-settings';
+    const elCardButtons = document.createElement('div')
+    elCardButtons.className = 'card-settings';
 
     // EDIT
-    const elCardEdit = elCardSettings.appendChild(document.createElement('button'));
+    const elCardEdit = elCardButtons.appendChild(document.createElement('button'));
     elCardEdit.className = 'card-edit';
     elCardEdit.addEventListener('pointerup', eventEditCard)
 
     // MENU
-    const elCardMenu = elCardSettings.appendChild(document.createElement('button'));
+    const elCardMenu = elCardButtons.appendChild(document.createElement('button'));
     elCardMenu.className = 'card-menu';
     elCardMenu.addEventListener('pointerup', eventMenuCard)
 
-    return elCardSettings;
+    return elCardButtons;
 }
 
 function eventCompleteCard(e) {
@@ -22791,7 +22791,6 @@ function getTaskById(id) {
 }
 
 function eventEditCard(e) {
-    console.log(e.target.offsetParent.dataset.id);
     const TARGET_ID = e.target.offsetParent.dataset.id;
     const elCardData = document.querySelector(`[data-id=\'${TARGET_ID}\'] .card-data`);
     const elCard = elCardData.offsetParent;
@@ -22900,7 +22899,9 @@ function createButton() {
     return elParentDiv;
 }
 
-function addProfileImage() {
+function addHeaderData() {
+    const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
+    headerAddButton.addEventListener('pointerdown', eventAddCard);
     elProfilePicture.src = _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__;
 }
 
@@ -22908,14 +22909,14 @@ function displayAddModal() {
     elModal.classList.remove('hidden');
     elModal.classList.add('blur');
     elModal.addEventListener('pointerdown', displayCancelModal);
-    elForm.addEventListener('submit', eventSubmit);
+    elForm.addEventListener('submit', eventModalSubmit);
 }
 
 function displayRemoveModal() {
     elModal.classList.add('hidden');
     elModal.classList.remove('blur');
     elModal.removeEventListener('pointerdown', displayCancelModal);
-    elForm.removeEventListener('submit', eventSubmit);
+    elForm.removeEventListener('submit', eventModalSubmit);
 }
 
 function displayCancelModal(e) {
@@ -22924,11 +22925,10 @@ function displayCancelModal(e) {
     }
 }
 
-function eventSubmit(e) {
+function eventModalSubmit(e) {
     e.preventDefault();
 
     const dirtyData = e.target;
-
     addCard(dirtyData);
     console.log((0,_createTask__WEBPACK_IMPORTED_MODULE_1__.getTaskList)());
 
@@ -22943,7 +22943,6 @@ function addCard(dirtyData) {
 }
 
 function serializeData(dirtyData) {
-    console.dir(`dirty data: ${dirtyData.dueDate.value}`)
     const data = [
         dirtyData.title.value,
         dirtyData.description.value,
