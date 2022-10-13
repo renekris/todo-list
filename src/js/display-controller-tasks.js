@@ -1,6 +1,7 @@
 const dateFns = require('date-fns');
 
-import { getTaskList, createTask, createProject } from "./data-db";
+import { getTaskList, createTask } from "./data-db";
+import { clearContent } from "./display-controller";
 
 const elContent = document.getElementById('content');
 
@@ -9,10 +10,6 @@ function createBase() {
     const elTaskWrapper = elContent.appendChild(createTaskWrapper());
     const elTaskList = elTaskWrapper.appendChild(createTaskList(taskList));
     const elAddButton = elTaskList.appendChild(createButton());
-}
-
-function clearBase() {
-    elContent.innerHTML = '';
 }
 
 function createTaskWrapper() {
@@ -121,7 +118,7 @@ function createCardButtons() {
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
     getTaskById(TARGET_ID).setCompleted(true);
-    clearBase();
+    clearContent();
     createBase();
 }
 
@@ -285,7 +282,7 @@ function eventModalSubmit(e) {
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
     createTask(...data);
-    clearBase();
+    clearContent();
     createBase();
 }
 

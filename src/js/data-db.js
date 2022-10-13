@@ -1,11 +1,10 @@
 let projectList = [];
 class Project {
-    constructor(title, description, dueDate) {
+    constructor(title, description) {
         this.id = crypto.randomUUID();
 
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
         this.tasks = [];
         this.completed = false;
     }
@@ -22,6 +21,14 @@ class Project {
             this.tasks.splice(index, 1);
         }
     }
+}
+
+function createProject(title, description) {
+    return projectList.push(new Project(title, description));
+}
+
+function getProjectList() {
+    return projectList;
 }
 
 let taskList = [];
@@ -54,16 +61,9 @@ function createTask(title, description, dueDate, priority) {
     return taskList.push(new Task(title, description, dueDate, priority));
 }
 
-function createProject(title, description, dueDate, tasks) {
-    return projectList.push(new Project(title, description, dueDate, tasks));
-}
 
 function getTaskList() {
     return taskList;
-}
-
-function getProjectList() {
-    return projectList;
 }
 
 export { getTaskList, getProjectList, createTask, createProject };
