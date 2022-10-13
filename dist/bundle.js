@@ -22651,37 +22651,26 @@ function getProjectList() {
 
 /***/ }),
 
-/***/ "./src/js/display-controller.js":
-/*!**************************************!*\
-  !*** ./src/js/display-controller.js ***!
-  \**************************************/
+/***/ "./src/js/display-controller-tasks.js":
+/*!********************************************!*\
+  !*** ./src/js/display-controller-tasks.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "initialize": () => (/* binding */ initialize)
+/* harmony export */   "createBase": () => (/* binding */ createBase),
+/* harmony export */   "eventAddModal": () => (/* binding */ eventAddModal)
 /* harmony export */ });
-/* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
-/* harmony import */ var _data_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data-db */ "./src/js/data-db.js");
+/* harmony import */ var _data_db__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data-db */ "./src/js/data-db.js");
 const dateFns = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
-
 
 
 
 const elContent = document.getElementById('content');
 
-function initialize() {
-    addHeaderData();
-    addSidebarData();
-    createBase();
-}
-
-function addSidebarData() {
-
-}
-
 function createBase() {
-    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.getTaskList)();
+    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)();
     const elTaskWrapper = elContent.appendChild(createTaskWrapper());
     const elTaskList = elTaskWrapper.appendChild(createTaskList(taskList));
     const elAddButton = elTaskList.appendChild(createButton());
@@ -22802,7 +22791,7 @@ function eventCompleteCard(e) {
 }
 
 function getTaskById(id) {
-    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.getTaskList)();
+    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)();
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
         if (task.id === id) {
@@ -22917,24 +22906,16 @@ function createButton() {
     elParentDiv.className = 'add-button';
     const elButton = elParentDiv.appendChild(document.createElement('button'));
     elButton.textContent = 'Create a new task';
-    elButton.addEventListener('pointerdown', eventAddCard);
+    elButton.addEventListener('pointerdown', eventAddModal);
 
     return elParentDiv;
 }
 
-function addHeaderData() {
-    const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
-    headerAddButton.addEventListener('pointerdown', eventAddCard);
-
-    const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
-    elProfilePicture.src = _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__;
-}
-
-function displayAddModal() {
+function eventAddModal() {
     const elModal = document.getElementById('modal');
     elModal.classList.remove('hidden');
     elModal.classList.add('blur');
-    elModal.addEventListener('pointerdown', displayCancelModal);
+    elModal.addEventListener('pointerdown', eventCancelModal);
 
     const elForm = document.getElementById('form');
     elForm.addEventListener('submit', eventModalSubmit);
@@ -22944,13 +22925,13 @@ function displayRemoveModal() {
     const elModal = document.getElementById('modal');
     elModal.classList.add('hidden');
     elModal.classList.remove('blur');
-    elModal.removeEventListener('pointerdown', displayCancelModal);
+    elModal.removeEventListener('pointerdown', eventCancelModal);
 
     const elForm = document.getElementById('form');
     elForm.removeEventListener('submit', eventModalSubmit);
 }
 
-function displayCancelModal(e) {
+function eventCancelModal(e) {
     if (e.target.id === 'modal') {
         displayRemoveModal();
     }
@@ -22961,14 +22942,14 @@ function eventModalSubmit(e) {
 
     const dirtyData = e.target;
     addCard(dirtyData);
-    console.log((0,_data_db__WEBPACK_IMPORTED_MODULE_1__.getTaskList)());
+    console.log((0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)());
 
     displayRemoveModal();
 }
 
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
-    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createTask)(...data);
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.createTask)(...data);
     clearBase();
     createBase();
 }
@@ -22987,9 +22968,43 @@ function serializeData(dirtyData) {
     return data;
 }
 
-function eventAddCard() {
-    displayAddModal();
-    console.log('test');
+
+
+
+/***/ }),
+
+/***/ "./src/js/display-controller.js":
+/*!**************************************!*\
+  !*** ./src/js/display-controller.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "initialize": () => (/* binding */ initialize)
+/* harmony export */ });
+/* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
+/* harmony import */ var _display_controller_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display-controller-tasks */ "./src/js/display-controller-tasks.js");
+
+
+
+
+function initialize() {
+    addHeaderData();
+    addSidebarData();
+    (0,_display_controller_tasks__WEBPACK_IMPORTED_MODULE_1__.createBase)();
+}
+
+function addSidebarData() {
+
+}
+
+function addHeaderData() {
+    const headerAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
+    headerAddButton.addEventListener('pointerdown', _display_controller_tasks__WEBPACK_IMPORTED_MODULE_1__.eventAddModal);
+
+    const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
+    elProfilePicture.src = _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__;
 }
 
 
