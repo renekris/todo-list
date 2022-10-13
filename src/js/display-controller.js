@@ -226,13 +226,15 @@ function eventSaveCard(e) {
     task.dueDate = e.target[2].value;
     task.priority = e.target[3].value;
 
-    clearBase();
-    createBase();
+    const elCard = e.target.offsetParent;
+    elCard.replaceWith(createCard(task));
 }
 
-function eventCancelCard() {
-    clearBase();
-    createBase();
+function eventCancelCard(e) {
+    const TARGET_ID = e.target.offsetParent.dataset.id;
+    const task = getTaskById(TARGET_ID);
+    const elCard = e.target.offsetParent;
+    elCard.replaceWith(createCard(task));
 }
 
 function eventMenuCard(e) {
