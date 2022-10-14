@@ -1,6 +1,6 @@
 const dateFns = require('date-fns');
 
-import { getTaskList, getProjectList, createTask } from "./data-db";
+import { getTaskList, getProjectList } from "./data-db";
 import { displayCurrentProject } from "./display-controller";
 
 function createTaskList(taskList, classIdentifier = 'home') {
@@ -236,68 +236,15 @@ function eventMenuCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
 }
 
-function createButton() {
-    const elParentDiv = document.createElement('div');
-    elParentDiv.className = 'add-button';
-    const elButton = elParentDiv.appendChild(document.createElement('button'));
-    elButton.textContent = 'Create a new task';
-    elButton.addEventListener('pointerdown', eventAddModal);
+// OLD CREATE BUTTON CODE ON OVERALL VIEW
+// function createButton() {
+//     const elParentDiv = document.createElement('div');
+//     elParentDiv.className = 'add-button';
+//     const elButton = elParentDiv.appendChild(document.createElement('button'));
+//     elButton.textContent = 'Create a new task';
+//     elButton.addEventListener('pointerdown', eventAddModal);
 
-    return elParentDiv;
-}
+//     return elParentDiv;
+// }
 
-function eventAddModal() {
-    const elModal = document.getElementById('modal');
-    elModal.classList.remove('hidden');
-    elModal.classList.add('blur');
-    elModal.addEventListener('pointerdown', eventCancelModal);
-
-    const elForm = document.getElementById('form');
-    elForm.addEventListener('submit', eventModalSubmit);
-}
-
-function displayRemoveModal() {
-    const elModal = document.getElementById('modal');
-    elModal.classList.add('hidden');
-    elModal.classList.remove('blur');
-    elModal.removeEventListener('pointerdown', eventCancelModal);
-
-    const elForm = document.getElementById('form');
-    elForm.removeEventListener('submit', eventModalSubmit);
-}
-
-function eventCancelModal(e) {
-    if (e.target.id === 'modal') {
-        displayRemoveModal();
-    }
-}
-
-function eventModalSubmit(e) {
-    e.preventDefault();
-
-    const dirtyData = e.target;
-    addCard(dirtyData);
-    console.log(getTaskList());
-
-    displayRemoveModal();
-}
-
-function addCard(dirtyData) {
-    const data = serializeData(dirtyData);
-    createTask(...data);
-    displayCurrentProject();
-}
-
-function serializeData(dirtyData) {
-    const data = [
-        dirtyData.title.value,
-        dirtyData.description.value,
-        dirtyData.dueDate.value === ''
-            ? Date.now()
-            : Date.parse(dirtyData.dueDate.value),
-        dirtyData.priority.value,
-    ]
-    return data;
-}
-
-export { eventAddModal, createTaskList };
+export { createTaskList };

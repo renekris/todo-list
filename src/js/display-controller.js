@@ -1,8 +1,8 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
 import { getProjectList, createProject, createTask } from "./data-db";
-import { eventAddModal } from './display-controller-tasks';
 import { displayProject } from './display-controller-projects';
+import { eventDisplayModal } from "./display-controller-modal";
 
 const elContent = document.getElementById('content');
 
@@ -34,12 +34,10 @@ function setProjectsToSidebar() {
     const projects = getProjectList();
     for (let i = 0; i < projects.length; i++) {
         const project = projects[i];
-        const elProjectButton = document.createElement('button');
+        const elProjectButton = elProjectsDiv.appendChild(document.createElement('button'));
         elProjectButton.textContent = project.title;
         elProjectButton.dataset.id = project.id;
         elProjectButton.addEventListener('pointerdown', eventProjectButtonClicked);
-
-        elProjectsDiv.appendChild(elProjectButton);
     }
 }
 
@@ -52,21 +50,22 @@ function eventProjectButtonClicked(e) {
     const projectIndex = projects.findIndex(project => {
         return project.id === e.target.dataset.id;
     })
+    currentProjectIndex = projectIndex;
     displayProject(projectIndex);
 }
 
-function displayCurrentProject() {
-    displayProject(0);
+function displayCurrentProject(overwriteProjectIndex = null) {
+    displayProject(overwriteProjectIndex ?? currentProjectIndex);
 }
 
 function addHeaderData() {
     const elLogo = Array.from(document.getElementsByClassName('logo'))[0];
     elLogo.addEventListener('pointerdown', () => {
-        displayCurrentProject();
+        displayCurrentProject(0);
     });
 
     const elHeaderAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
-    elHeaderAddButton.addEventListener('pointerdown', eventAddModal);
+    elHeaderAddButton.addEventListener('pointerdown', eventDisplayModal);
 
     const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
     elProfilePicture.src = profilePicture;
