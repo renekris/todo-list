@@ -14,13 +14,15 @@ class Project {
     setIsCompleted(value) {
         this.isCompleted = value;
     }
-    addTaskToProject(title, description, dueDate, priority) {
+
+    createProjectTask(title, description, dueDate, priority) {
         this.tasks.push(new Task(title, description, dueDate, priority, this.id));
     }
-    deleteTaskFromProject(id) {
-        index = this.tasks.indexOf(id);
+
+    deleteTaskFromProject(taskId) {
+        const taskIndex = this.tasks.findIndex(task => task.id === taskId);
         if (index > -1) {
-            this.tasks.splice(index, 1);
+            this.tasks.splice(taskIndex, 1);
         }
     }
 }
@@ -33,8 +35,6 @@ function getProjectList() {
     return projectList;
 }
 
-// MAKE EVERYTHING COMPATIBLE WITHOUT taskList
-let taskList = [];
 class Task {
     constructor(title, description, dueDate, priority, parentProjectId) {
         this.id = crypto.randomUUID();
@@ -45,54 +45,57 @@ class Task {
         this.priority = priority;
         this.isCompleted = false;
 
-        this.parentProjectId = parentProjectId || null;
+        this.parentProjectId = parentProjectId;
     }
 
     setIsCompleted(value) {
         this.isCompleted = value;
     }
+
     setParentProjectId(projectId) {
-        if (this.parentProjectId !== null) {
-            this.removeTaskFromProject();
-        }
-        this.addTaskToProject(projectId);
+        this.#removeTaskFromProject();
+        this.#addTaskToProject(projectId);
         this.parentProjectId = projectId;
     }
-    removeTaskFromProject() {
-        const projectIndex = projectList.findIndex(project => {
-            return project.id === this.parentProjectId;
-        });
 
-        const projectTaskIndex = projectList[projectIndex].tasks.findIndex(projectTask => {
-            return projectTask.id === this.id;
-        })
-
+    #removeTaskFromProject() {
+        const project = projectList.find(project => project.id === this.parentProjectId);
+        const projectTaskIndex = project.tasks.findIndex(projectTask => projectTask.id === this.id);
         if (projectTaskIndex > -1) {
-            projectList[projectIndex].tasks.splice(projectTaskIndex, 1);
+            project.tasks.splice(projectTaskIndex, 1);
         }
     }
-    addTaskToProject(projectId) {
-        const projectIndex = projectList.findIndex(project => {
-            return project.id === projectId;
-        });
-        projectList[projectIndex].tasks.push(this);
+
+    #addTaskToProject(projectId) {
+        const project = projectList.find(project => project.id === projectId);
+        project.tasks.push(this);
     }
 }
 
-function createTask(title, description, dueDate, priority) {
-    // new cards get pushed to "default" project
-    const projectIndex = projectList.findIndex(project => {
-        return project.isDefault === true;
-    });
-    if (projectIndex > -1) {
-        let task = new Task(title, description, dueDate, priority);
-        const projectId = projectList[projectIndex].id;
-        task.setParentProjectId(projectId);
-        return taskList.push(task);
+function createTask(title, description, dueDate, priority, projectId = null) {
+    // new cards get pushed to "default" project unless specified otherwise
+    if (projectId !== null) {
+        getProjectById(projectId).createProjectTask(title, description, dueDate, priority);
+    } else {
+        try {
+            const project = projectList.find(project => project.isDefault === true);
+            project.createProjectTask(title, description, dueDate, priority);
+        } catch (err) {
+            console.error('Missing default with no specified ID');
+        }
     }
+}
+
+function getProjectById(id) {
+    return projectList.find(project => project.id === id);
 }
 
 function getTaskList() {
+    let taskList = [];
+    projectList.forEach(project => {
+        const tasks = project.tasks;
+        tasks.forEach(task => taskList.push(task));
+    });
     return taskList;
 }
 

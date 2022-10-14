@@ -1,15 +1,25 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
-import { getProjectList } from "./data-db";
-import { createBase as createTaskBase, eventAddModal } from './display-controller-tasks';
+import { getProjectList, createProject, createTask } from "./data-db";
+import { eventAddModal } from './display-controller-tasks';
 import { displayProject } from './display-controller-projects';
 
 const elContent = document.getElementById('content');
 
+export let currentProjectIndex = 0;
+
 function initialize() {
+    // IMMUTABLE DEFAULT PROJECT
+    createProject('Default', 'Default', true);
+
+    // TEMP PROJECTS
+    createProject('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
+    createTask('Go outside', 'Go outside and touch some grass.', Date.now(), 1);
+    createTask('Sleep', 'Jump onto your bed and take a nap.', 1643587200000, 4);
+
     addHeaderData();
     addSidebarData();
-    createTaskBase();
+    displayProject(currentProjectIndex);
 }
 
 function addSidebarData() {
@@ -45,14 +55,15 @@ function eventProjectButtonClicked(e) {
     displayProject(projectIndex);
 }
 
-function eventDisplayHome() {
-    clearContent();
-    createTaskBase();
+function displayCurrentProject() {
+    displayProject(0);
 }
 
 function addHeaderData() {
     const elLogo = Array.from(document.getElementsByClassName('logo'))[0];
-    elLogo.addEventListener('pointerdown', eventDisplayHome);
+    elLogo.addEventListener('pointerdown', () => {
+        displayCurrentProject();
+    });
 
     const elHeaderAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
     elHeaderAddButton.addEventListener('pointerdown', eventAddModal);
@@ -61,4 +72,4 @@ function addHeaderData() {
     elProfilePicture.src = profilePicture;
 }
 
-export { initialize, clearContent };
+export { initialize, clearContent, displayCurrentProject };

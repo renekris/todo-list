@@ -22594,13 +22594,15 @@ class Project {
     setIsCompleted(value) {
         this.isCompleted = value;
     }
-    addTaskToProject(title, description, dueDate, priority) {
+
+    createProjectTask(title, description, dueDate, priority) {
         this.tasks.push(new Task(title, description, dueDate, priority, this.id));
     }
-    deleteTaskFromProject(id) {
-        index = this.tasks.indexOf(id);
+
+    deleteTaskFromProject(taskId) {
+        const taskIndex = this.tasks.findIndex(task => task.id === taskId);
         if (index > -1) {
-            this.tasks.splice(index, 1);
+            this.tasks.splice(taskIndex, 1);
         }
     }
 }
@@ -22613,8 +22615,6 @@ function getProjectList() {
     return projectList;
 }
 
-// MAKE EVERYTHING COMPATIBLE WITHOUT taskList
-let taskList = [];
 class Task {
     constructor(title, description, dueDate, priority, parentProjectId) {
         this.id = crypto.randomUUID();
@@ -22625,54 +22625,57 @@ class Task {
         this.priority = priority;
         this.isCompleted = false;
 
-        this.parentProjectId = parentProjectId || null;
+        this.parentProjectId = parentProjectId;
     }
 
     setIsCompleted(value) {
         this.isCompleted = value;
     }
+
     setParentProjectId(projectId) {
-        if (this.parentProjectId !== null) {
-            this.removeTaskFromProject();
-        }
-        this.addTaskToProject(projectId);
+        this.#removeTaskFromProject();
+        this.#addTaskToProject(projectId);
         this.parentProjectId = projectId;
     }
-    removeTaskFromProject() {
-        const projectIndex = projectList.findIndex(project => {
-            return project.id === this.parentProjectId;
-        });
 
-        const projectTaskIndex = projectList[projectIndex].tasks.findIndex(projectTask => {
-            return projectTask.id === this.id;
-        })
-
+    #removeTaskFromProject() {
+        const project = projectList.find(project => project.id === this.parentProjectId);
+        const projectTaskIndex = project.tasks.findIndex(projectTask => projectTask.id === this.id);
         if (projectTaskIndex > -1) {
-            projectList[projectIndex].tasks.splice(projectTaskIndex, 1);
+            project.tasks.splice(projectTaskIndex, 1);
         }
     }
-    addTaskToProject(projectId) {
-        const projectIndex = projectList.findIndex(project => {
-            return project.id === projectId;
-        });
-        projectList[projectIndex].tasks.push(this);
+
+    #addTaskToProject(projectId) {
+        const project = projectList.find(project => project.id === projectId);
+        project.tasks.push(this);
     }
 }
 
-function createTask(title, description, dueDate, priority) {
-    // new cards get pushed to "default" project
-    const projectIndex = projectList.findIndex(project => {
-        return project.isDefault === true;
-    });
-    if (projectIndex > -1) {
-        let task = new Task(title, description, dueDate, priority);
-        const projectId = projectList[projectIndex].id;
-        task.setParentProjectId(projectId);
-        return taskList.push(task);
+function createTask(title, description, dueDate, priority, projectId = null) {
+    // new cards get pushed to "default" project unless specified otherwise
+    if (projectId !== null) {
+        getProjectById(projectId).createProjectTask(title, description, dueDate, priority);
+    } else {
+        try {
+            const project = projectList.find(project => project.isDefault === true);
+            project.createProjectTask(title, description, dueDate, priority);
+        } catch (err) {
+            console.error('Missing default with no specified ID');
+        }
     }
+}
+
+function getProjectById(id) {
+    return projectList.find(project => project.id === id);
 }
 
 function getTaskList() {
+    let taskList = [];
+    projectList.forEach(project => {
+        const tasks = project.tasks;
+        tasks.forEach(task => taskList.push(task));
+    });
     return taskList;
 }
 
@@ -22754,7 +22757,6 @@ function createProjectCards(taskList) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "createBase": () => (/* binding */ createBase),
 /* harmony export */   "createTaskList": () => (/* binding */ createTaskList),
 /* harmony export */   "eventAddModal": () => (/* binding */ eventAddModal)
 /* harmony export */ });
@@ -22764,22 +22766,6 @@ const dateFns = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm
 
 
 
-
-const elContent = document.getElementById('content');
-
-function createBase() {
-    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)();
-    const elTaskWrapper = elContent.appendChild(createTaskWrapper());
-    const elTaskList = elTaskWrapper.appendChild(createTaskList(taskList));
-    const elAddButton = elTaskList.appendChild(createButton());
-}
-
-function createTaskWrapper() {
-    const taskWrapper = document.createElement('div');
-    taskWrapper.className = 'wrapper';
-
-    return taskWrapper;
-}
 
 function createTaskList(taskList, classIdentifier = 'home') {
     const elTaskList = document.createElement('div');
@@ -22881,18 +22867,11 @@ function createCardButtons() {
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
     getTaskById(TARGET_ID).setIsCompleted(true);
-    (0,_display_controller__WEBPACK_IMPORTED_MODULE_1__.clearContent)();
-    createBase();
+    (0,_display_controller__WEBPACK_IMPORTED_MODULE_1__.displayCurrentProject)();
 }
 
 function getTaskById(id) {
-    const taskList = (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)();
-    for (let i = 0; i < taskList.length; i++) {
-        const task = taskList[i];
-        if (task.id === id) {
-            return task;
-        }
-    }
+    return (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.getTaskList)().find(task => task.id === id);
 }
 
 function eventEditCard(e) {
@@ -23071,8 +23050,7 @@ function eventModalSubmit(e) {
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
     (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.createTask)(...data);
-    (0,_display_controller__WEBPACK_IMPORTED_MODULE_1__.clearContent)();
-    createBase();
+    (0,_display_controller__WEBPACK_IMPORTED_MODULE_1__.displayCurrentProject)();
 }
 
 function serializeData(dirtyData) {
@@ -23083,8 +23061,6 @@ function serializeData(dirtyData) {
             ? Date.now()
             : Date.parse(dirtyData.dueDate.value),
         dirtyData.priority.value,
-        dirtyData.notes.value,
-        dirtyData.checklist.value,
     ]
     return data;
 }
@@ -23103,6 +23079,8 @@ function serializeData(dirtyData) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "clearContent": () => (/* binding */ clearContent),
+/* harmony export */   "currentProjectIndex": () => (/* binding */ currentProjectIndex),
+/* harmony export */   "displayCurrentProject": () => (/* binding */ displayCurrentProject),
 /* harmony export */   "initialize": () => (/* binding */ initialize)
 /* harmony export */ });
 /* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
@@ -23117,10 +23095,20 @@ __webpack_require__.r(__webpack_exports__);
 
 const elContent = document.getElementById('content');
 
+let currentProjectIndex = 0;
+
 function initialize() {
+    // IMMUTABLE DEFAULT PROJECT
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Default', 'Default', true);
+
+    // TEMP PROJECTS
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createTask)('Go outside', 'Go outside and touch some grass.', Date.now(), 1);
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createTask)('Sleep', 'Jump onto your bed and take a nap.', 1643587200000, 4);
+
     addHeaderData();
     addSidebarData();
-    (0,_display_controller_tasks__WEBPACK_IMPORTED_MODULE_2__.createBase)();
+    (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_3__.displayProject)(currentProjectIndex);
 }
 
 function addSidebarData() {
@@ -23156,14 +23144,15 @@ function eventProjectButtonClicked(e) {
     ;(0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_3__.displayProject)(projectIndex);
 }
 
-function eventDisplayHome() {
-    clearContent();
-    (0,_display_controller_tasks__WEBPACK_IMPORTED_MODULE_2__.createBase)();
+function displayCurrentProject() {
+    (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_3__.displayProject)(0);
 }
 
 function addHeaderData() {
     const elLogo = Array.from(document.getElementsByClassName('logo'))[0];
-    elLogo.addEventListener('pointerdown', eventDisplayHome);
+    elLogo.addEventListener('pointerdown', () => {
+        displayCurrentProject();
+    });
 
     const elHeaderAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
     elHeaderAddButton.addEventListener('pointerdown', _display_controller_tasks__WEBPACK_IMPORTED_MODULE_2__.eventAddModal);
@@ -23369,19 +23358,12 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ "./src/index.css");
-/* harmony import */ var _js_data_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/data-db */ "./src/js/data-db.js");
-/* harmony import */ var _js_display_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/display-controller */ "./src/js/display-controller.js");
-
+/* harmony import */ var _js_display_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/display-controller */ "./src/js/display-controller.js");
 
 
 
 (() => {
-    (0,_js_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Personal', 'Things that I have to do.', true);
-    (0,_js_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
-    (0,_js_data_db__WEBPACK_IMPORTED_MODULE_1__.createTask)('Go outside', 'Go outside and touch some grass.', Date.now(), 1);
-    (0,_js_data_db__WEBPACK_IMPORTED_MODULE_1__.createTask)('Sleep', 'Jump onto your bed and take a nap.', 1643587200000, 4);
-
-    (0,_js_display_controller__WEBPACK_IMPORTED_MODULE_2__.initialize)();
+    (0,_js_display_controller__WEBPACK_IMPORTED_MODULE_1__.initialize)();
 })();
 
 })();

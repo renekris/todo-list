@@ -1,23 +1,7 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, createTask } from "./data-db";
-import { clearContent } from "./display-controller";
-
-const elContent = document.getElementById('content');
-
-function createBase() {
-    const taskList = getTaskList();
-    const elTaskWrapper = elContent.appendChild(createTaskWrapper());
-    const elTaskList = elTaskWrapper.appendChild(createTaskList(taskList));
-    const elAddButton = elTaskList.appendChild(createButton());
-}
-
-function createTaskWrapper() {
-    const taskWrapper = document.createElement('div');
-    taskWrapper.className = 'wrapper';
-
-    return taskWrapper;
-}
+import { displayCurrentProject } from "./display-controller";
 
 function createTaskList(taskList, classIdentifier = 'home') {
     const elTaskList = document.createElement('div');
@@ -119,18 +103,11 @@ function createCardButtons() {
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
     getTaskById(TARGET_ID).setIsCompleted(true);
-    clearContent();
-    createBase();
+    displayCurrentProject();
 }
 
 function getTaskById(id) {
-    const taskList = getTaskList();
-    for (let i = 0; i < taskList.length; i++) {
-        const task = taskList[i];
-        if (task.id === id) {
-            return task;
-        }
-    }
+    return getTaskList().find(task => task.id === id);
 }
 
 function eventEditCard(e) {
@@ -309,8 +286,7 @@ function eventModalSubmit(e) {
 function addCard(dirtyData) {
     const data = serializeData(dirtyData);
     createTask(...data);
-    clearContent();
-    createBase();
+    displayCurrentProject();
 }
 
 function serializeData(dirtyData) {
@@ -321,10 +297,8 @@ function serializeData(dirtyData) {
             ? Date.now()
             : Date.parse(dirtyData.dueDate.value),
         dirtyData.priority.value,
-        dirtyData.notes.value,
-        dirtyData.checklist.value,
     ]
     return data;
 }
 
-export { createBase, eventAddModal, createTaskList };
+export { eventAddModal, createTaskList };
