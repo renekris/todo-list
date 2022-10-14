@@ -23265,7 +23265,8 @@ function eventProjectButtonClicked(e) {
 }
 
 function displayCurrentProject(overwriteProjectIndex = null) {
-    (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_2__.displayProject)(overwriteProjectIndex ?? currentProjectIndex);
+    currentProjectIndex = overwriteProjectIndex ?? currentProjectIndex;
+    (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_2__.displayProject)(currentProjectIndex);
 }
 
 function addHeaderData() {
