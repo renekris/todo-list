@@ -55,7 +55,8 @@ function eventProjectButtonClicked(e) {
 }
 
 function displayCurrentProject(overwriteProjectIndex = null) {
-    displayProject(overwriteProjectIndex ?? currentProjectIndex);
+    currentProjectIndex = overwriteProjectIndex ?? currentProjectIndex;
+    displayProject(currentProjectIndex);
 }
 
 function addHeaderData() {
