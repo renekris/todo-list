@@ -127,24 +127,24 @@ function createCardEdit(task) {
 
     // TITLE
     const elTitle = elParentDiv.appendChild(document.createElement('input'));
-    elTitle.className = 'title';
+    elTitle.className = 'edit-title';
     elTitle.value = task.title;
     elTitle.type = 'text';
 
     // DESCRIPTION
     const elDescription = elParentDiv.appendChild(document.createElement('textarea'));
-    elDescription.className = 'description';
+    elDescription.className = 'edit-description';
     elDescription.value = task.description;
 
     // DATE
     const elDate = elParentDiv.appendChild(document.createElement('input'));
-    elDate.className = 'dueDate';
+    elDate.className = 'edit-dueDate';
     elDate.type = 'date';
     elDate.value = new Date(task.dueDate).toISOString().split('T')[0];
 
     // PRIORITY
     const elPriority = elParentDiv.appendChild(document.createElement('select'));
-    elPriority.className = 'priority';
+    elPriority.className = 'edit-priority';
     const elOptionPriority1 = elPriority.appendChild(document.createElement('option'));
     elOptionPriority1.value = '1';
     elOptionPriority1.text = 'Priority 1';
@@ -168,31 +168,30 @@ function createCardEdit(task) {
     // PROJECT
     const projects = getProjectList();
     const elProjectSelect = elParentDiv.appendChild(document.createElement('select'));
+    elProjectSelect.className = 'edit-select-project';
     for (let i = 0; i < projects.length; i++) {
         const project = projects[i];
         const elOption = elProjectSelect.appendChild(document.createElement('option'));
         elOption.text = project.title;
         elOption.value = project.id;
-        // Implement this when gh-3 is done
-        // if (condition) {
-        //     elOption.selected = true;
-        // }
+        if (project.id === task.parentProjectId) {
+            elOption.selected = true;
+        }
     }
-
 
     // BUTTONS PARENT
     const elButtons = elParentDiv.appendChild(document.createElement('div'));
-    elButtons.className = 'buttons';
+    elButtons.className = 'edit-buttons';
 
     // CANCEL
     const elCancel = elButtons.appendChild(document.createElement('button'));
-    elCancel.className = 'cancel';
+    elCancel.className = 'edit-cancel';
     elCancel.textContent = 'Cancel';
     elCancel.addEventListener('pointerdown', eventCancelCard);
 
     // SUBMIT
     const elSubmit = elButtons.appendChild(document.createElement('button'));
-    elSubmit.className = 'submit';
+    elSubmit.className = 'edit-submit';
     elSubmit.textContent = 'Save';
     elSubmit.type = 'submit';
     elParentDiv.addEventListener('submit', eventSaveCard);

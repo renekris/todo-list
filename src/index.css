@@ -464,15 +464,16 @@ p {
 
 .editing form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 2fr 1fr min-content;
     width: 100%;
 }
 
-.editing .title,
-.editing .description,
-.editing .dueDate,
-.editing .priority {
+.edit-title,
+.edit-description,
+.edit-dueDate,
+.edit-priority,
+.edit-select-project {
     background-color: transparent;
     border: none;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -480,27 +481,30 @@ p {
         sans-serif;
 }
 
-.editing .title {
+.edit-title {
     width: 100%;
     grid-area: 1 / 1 / 2 / -1;
     font-weight: bold;
     font-size: 1rem;
 }
 
-.editing .description {
+.edit-description {
     width: 100%;
     grid-area: 2 / 1 / 3 / -1;
     resize: none;
     font-size: 0.8rem;
 }
 
-.editing .dueDate {
+.edit-dueDate {
 }
 
-.editing .priority {
+.edit-priority {
 }
 
-.editing .buttons {
+.edit-select-project {
+}
+
+.edit-buttons {
     display: flex;
     justify-content: end;
     width: 100%;
@@ -510,19 +514,19 @@ p {
     height: 1.75rem;
 }
 
-.editing .cancel,
-.editing .submit {
+.edit-cancel,
+.edit-submit {
     width: 5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.editing .cancel {
+.edit-cancel {
     background-color: #f5f5f5;
 }
 
-.editing .submit {
+.edit-submit {
     background-color: var(--header);
 }
 
