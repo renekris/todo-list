@@ -22710,10 +22710,14 @@ function eventDisplayModal(e) {
 
 function eventSubmit(e) {
     e.preventDefault();
-    console.dir(e.target);
+
     if (e.target.offsetParent.className === 'task') {
         const taskData = serializeTaskData(e.target);
         (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.createTask)(...taskData);
+    } else if (e.target.offsetParent.className === 'project') {
+        const projectData = serializeProjectData(e.target);
+        (0,_data_db__WEBPACK_IMPORTED_MODULE_0__.createProject)(...projectData);
+        (0,_display_controller__WEBPACK_IMPORTED_MODULE_1__.setProjectsToSidebar)();
     }
 
     removeModal();
@@ -22729,6 +22733,13 @@ function serializeTaskData(targetElement) {
             : Date.parse(targetElement.dueDate.value),
         targetElement.priority.value,
         targetElement.project.value,
+    ]
+}
+
+function serializeProjectData(targetElement) {
+    return [
+        targetElement.title.value,
+        targetElement.description.value,
     ]
 }
 
@@ -22764,7 +22775,22 @@ function removeModal() {
 }
 
 function createProjectModal() {
-    return createModalElement().inputTitle();
+    const elFieldset = document.createElement('fieldset');
+    const elForm = elFieldset.appendChild(document.createElement('form'));
+    elForm.id = 'form';
+
+    elForm.addEventListener('submit', eventSubmit);
+
+    // TITLE
+    elForm.appendChild(createModalElement().inputTitle());
+
+    // DESCRIPTION
+    elForm.appendChild(createModalElement().textareaDescription());
+
+    // BUTTONS
+    elForm.appendChild(createModalElement().buttonsCancelSubmit());
+
+    return elFieldset;
 }
 
 function createTaskModal() {
@@ -23260,7 +23286,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clearContent": () => (/* binding */ clearContent),
 /* harmony export */   "currentProjectIndex": () => (/* binding */ currentProjectIndex),
 /* harmony export */   "displayCurrentProject": () => (/* binding */ displayCurrentProject),
-/* harmony export */   "initialize": () => (/* binding */ initialize)
+/* harmony export */   "initialize": () => (/* binding */ initialize),
+/* harmony export */   "setProjectsToSidebar": () => (/* binding */ setProjectsToSidebar)
 /* harmony export */ });
 /* harmony import */ var _img_temp_profile_picture_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/temp/profile-picture.png */ "./src/img/temp/profile-picture.png");
 /* harmony import */ var _data_db__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data-db */ "./src/js/data-db.js");
