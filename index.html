@@ -11,7 +11,7 @@
         <header class="header">
             <div class="logo">
                 <i class="logo-icon"></i>
-                <p class="logo-title">Todo</p>
+                <p class="logo-title">&#62;TodoX;</p>
             </div>
             <div class="manage">
                 <div class="manage-buttons">
@@ -26,24 +26,24 @@
             </div>
         </header>
         <div id="sidebar">
-            <nav class="nav-button">
+            <nav>
                 <ul>
-                    <li>
-                        <button id="button-home">Today</button>
-                    </li>
-                    <li>
-                        <button id="button-upcoming">Upcoming 7d</button>
-                    </li>
-                    <li>
-                        <button id="button-priority">Priorities</button>
-                    </li>
-                    <li class="projects-header">
-                        <h4>Projects</h4>
-                        <div id="projects">
-                            <button class="project" data-id="random-long-id">
-                                Default Project
-                            </button>
+                    <li class="nav-header">
+                        <button class="header-button" id="button-tasks">
+                            <h4>Tasks</h4>
+                        </button>
+                        <div class="nav-content" id="sorting">
+                            <button id="button-home">Today</button>
+                            <button id="button-upcoming">Upcoming 7d</button>
+                            <button id="button-priority">Priorities</button>
+                            <button id="button-all">All</button>
                         </div>
+                    </li>
+                    <li class="nav-header">
+                        <button class="header-button" id="button-projects">
+                            <h4>Projects</h4>
+                        </button>
+                        <div class="nav-content" id="projects"></div>
                     </li>
                 </ul>
             </nav>
