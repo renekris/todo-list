@@ -10,7 +10,7 @@ export let currentProjectIndex = 0;
 
 function initialize() {
     // IMMUTABLE DEFAULT PROJECT
-    createProject('Default', 'Default', true);
+    createProject('Tasks', '', true);
 
     // TEMP PROJECTS
     createProject('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
@@ -23,6 +23,9 @@ function initialize() {
 }
 
 function addSidebarData() {
+    const elTasksButton = document.getElementById('button-tasks');
+    elTasksButton.addEventListener('pointerdown', () => displayProject(0));
+
     setProjectsToSidebar();
     // possibly add checklist and/or notes
 }
@@ -32,7 +35,9 @@ function setProjectsToSidebar() {
     elProjectsDiv.innerHTML = '';
 
     const projects = getProjectList();
-    for (let i = 0; i < projects.length; i++) {
+
+    // i = 1 to ignore the default project
+    for (let i = 1; i < projects.length; i++) {
         const project = projects[i];
         const elProjectButton = elProjectsDiv.appendChild(document.createElement('button'));
         elProjectButton.textContent = project.title;
@@ -46,7 +51,8 @@ function setProjectsToSidebar() {
 function createAddProjectButton() {
     const elButton = document.createElement('button');
     elButton.classList.add('add-project-button');
-    elButton.addEventListener('pointerdown', eventDisplayModal);
+    // using pointerUP to make focus on form element possible
+    elButton.addEventListener('pointerup', eventDisplayModal);
     return elButton;
 }
 
@@ -75,7 +81,8 @@ function addHeaderData() {
     });
 
     const elHeaderAddButton = Array.from(document.getElementsByClassName('add-task-button'))[0];
-    elHeaderAddButton.addEventListener('pointerdown', eventDisplayModal);
+    // using pointerUP to make focus on form element possible
+    elHeaderAddButton.addEventListener('pointerup', eventDisplayModal);
 
     const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
     elProfilePicture.src = profilePicture;

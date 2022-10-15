@@ -61,10 +61,12 @@ function displayModal(type) {
         case 'task':
             elModal.classList.add(type); //adding caller type identifier to recognize submit type
             elModalContent.appendChild(createTaskModal());
+            document.getElementById('title').focus();
             break;
         case 'project':
             elModal.classList.add(type);
             elModalContent.appendChild(createProjectModal());
+            document.getElementById('title').focus();
             break;
         default:
             break;

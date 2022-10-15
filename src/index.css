@@ -49,7 +49,7 @@ html {
 body {
     display: grid;
     grid-template-columns: 1fr 6fr;
-    grid-template-rows: 1fr 25fr 1fr;
+    grid-template-rows: 1.3fr 25fr 1fr;
     margin: 0;
 }
 
@@ -79,8 +79,8 @@ p {
 
 .logo-title {
     font-weight: bold;
-    font-size: 1.25rem;
-    color: #000000;
+    font-size: 2rem;
+    color: #000;
 }
 
 .manage {
@@ -136,6 +136,7 @@ p {
     justify-content: center;
     align-items: flex-start;
     background-color: var(--sidebar);
+    width: 100%;
 }
 
 #sidebar nav,
@@ -149,7 +150,7 @@ p {
     justify-content: center;
 }
 
-.nav-button button {
+nav button {
     height: 2rem;
     border: none;
     cursor: pointer;
@@ -157,25 +158,24 @@ p {
     background-color: var(--sidebar);
 }
 
-.nav-button button:hover {
+nav button:hover {
     background-color: var(--content-background);
 }
 
-.projects-header {
+.nav-header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.projects-header h4 {
+.header-button {
     font-size: 1.1rem;
-    margin: 0.25rem 0;
-    width: 100%;
-    text-align: center;
-
+    font-weight: 700;
+    padding: 0.5rem 0;
+    height: 100%;
     border-bottom: 2px solid;
     border-image-source: radial-gradient(
         circle,
@@ -185,21 +185,31 @@ p {
     border-image-slice: 1;
 }
 
-#projects {
+.header-button h4 {
+    font-size: 1.2rem;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.nav-content {
     width: 100%;
     margin: 0;
 }
 
-#projects button {
+.nav-content button {
     font-size: 1rem;
+    padding: 0.25rem 0;
+    height: fit-content;
 }
 
 .add-project-button {
-    height: 1.5rem !important;
+    height: 1.25rem !important;
     background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    margin: 0;
 }
 
 /* CONTENT */
@@ -218,8 +228,7 @@ p {
 }
 
 #task-list {
-    padding-top: 10%;
-    padding-bottom: 10%;
+    padding-bottom: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -227,7 +236,7 @@ p {
 }
 
 .new-tasks-span {
-    margin: 2rem 0;
+    margin: 3rem 0;
 }
 
 .card {

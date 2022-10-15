@@ -41,7 +41,7 @@ function createCardCompleteButton() {
     elCardComplete.className = 'card-complete';
     const elCardCompleteButton = elCardComplete.appendChild(document.createElement('button'));
     elCardCompleteButton.className = 'card-complete-button';
-    elCardCompleteButton.addEventListener('pointerup', eventCompleteCard);
+    elCardCompleteButton.addEventListener('pointerdown', eventCompleteCard);
 
     return elCardComplete;
 }
@@ -90,12 +90,12 @@ function createCardButtons() {
     // EDIT
     const elCardEdit = elCardButtons.appendChild(document.createElement('button'));
     elCardEdit.className = 'card-edit';
-    elCardEdit.addEventListener('pointerup', eventEditCard)
+    elCardEdit.addEventListener('pointerdown', eventEditCard)
 
     // MENU
     const elCardMenu = elCardButtons.appendChild(document.createElement('button'));
     elCardMenu.className = 'card-menu';
-    elCardMenu.addEventListener('pointerup', eventMenuCard)
+    elCardMenu.addEventListener('pointerdown', eventMenuCard)
 
     return elCardButtons;
 }
