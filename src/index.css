@@ -95,7 +95,7 @@ p {
     align-items: center;
 }
 
-.manage-add {
+.add-task-button {
     width: 2rem;
     height: 2rem;
     background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
@@ -107,7 +107,7 @@ p {
     transition: 0.1s cubic-bezier(0, 0, 0, 1);
 }
 
-.manage-add:hover {
+.add-task-button:hover {
     scale: 1.05;
 }
 
@@ -171,12 +171,35 @@ p {
 }
 
 .projects-header h4 {
+    font-size: 1.1rem;
     margin: 0.25rem 0;
+    width: 100%;
+    text-align: center;
+
+    border-bottom: 2px solid;
+    border-image-source: radial-gradient(
+        circle,
+        rgba(253, 132, 31, 1) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    border-image-slice: 1;
 }
 
 #projects {
     width: 100%;
     margin: 0;
+}
+
+#projects button {
+    font-size: 1rem;
+}
+
+.add-project-button {
+    height: 1.5rem !important;
+    background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
 /* CONTENT */

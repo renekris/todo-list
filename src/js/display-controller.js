@@ -39,6 +39,15 @@ function setProjectsToSidebar() {
         elProjectButton.dataset.id = project.id;
         elProjectButton.addEventListener('pointerdown', eventProjectButtonClicked);
     }
+
+    elProjectsDiv.appendChild(createAddProjectButton());
+}
+
+function createAddProjectButton() {
+    const elButton = document.createElement('button');
+    elButton.classList.add('add-project-button');
+    elButton.addEventListener('pointerdown', eventDisplayModal);
+    return elButton;
 }
 
 function clearContent() {
@@ -65,7 +74,7 @@ function addHeaderData() {
         displayCurrentProject(0);
     });
 
-    const elHeaderAddButton = Array.from(document.getElementsByClassName('manage-add'))[0];
+    const elHeaderAddButton = Array.from(document.getElementsByClassName('add-task-button'))[0];
     elHeaderAddButton.addEventListener('pointerdown', eventDisplayModal);
 
     const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
