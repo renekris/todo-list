@@ -81,4 +81,4 @@ function addHeaderData() {
     elProfilePicture.src = profilePicture;
 }
 
-export { initialize, clearContent, displayCurrentProject };
+export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar };

@@ -1,5 +1,5 @@
-import { getProjectList, createTask } from "./data-db";
-import { displayCurrentProject, currentProjectIndex } from "./display-controller";
+import { getProjectList, createTask, createProject } from "./data-db";
+import { displayCurrentProject, currentProjectIndex, setProjectsToSidebar } from "./display-controller";
 
 function eventDisplayModal(e) {
     if (e.target.className === 'add-project-button') {
@@ -12,10 +12,14 @@ function eventDisplayModal(e) {
 
 function eventSubmit(e) {
     e.preventDefault();
-    console.dir(e.target);
+
     if (e.target.offsetParent.className === 'task') {
         const taskData = serializeTaskData(e.target);
         createTask(...taskData);
+    } else if (e.target.offsetParent.className === 'project') {
+        const projectData = serializeProjectData(e.target);
+        createProject(...projectData);
+        setProjectsToSidebar();
     }
 
     removeModal();
@@ -31,6 +35,13 @@ function serializeTaskData(targetElement) {
             : Date.parse(targetElement.dueDate.value),
         targetElement.priority.value,
         targetElement.project.value,
+    ]
+}
+
+function serializeProjectData(targetElement) {
+    return [
+        targetElement.title.value,
+        targetElement.description.value,
     ]
 }
 
@@ -66,7 +77,22 @@ function removeModal() {
 }
 
 function createProjectModal() {
-    return createModalElement().inputTitle();
+    const elFieldset = document.createElement('fieldset');
+    const elForm = elFieldset.appendChild(document.createElement('form'));
+    elForm.id = 'form';
+
+    elForm.addEventListener('submit', eventSubmit);
+
+    // TITLE
+    elForm.appendChild(createModalElement().inputTitle());
+
+    // DESCRIPTION
+    elForm.appendChild(createModalElement().textareaDescription());
+
+    // BUTTONS
+    elForm.appendChild(createModalElement().buttonsCancelSubmit());
+
+    return elFieldset;
 }
 
 function createTaskModal() {
