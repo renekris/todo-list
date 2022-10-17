@@ -15,16 +15,16 @@ function createProject(projectIndex) {
     const projects = getProjectList();
     const project = projects[projectIndex];
 
-    const elWrapper = createTasksWrapper(
+    const elProjectWrapper = createProjectWrapper(
         project.title,
         project.description,
         project.tasks,
     );
 
-    return elWrapper;
+    return elProjectWrapper;
 }
 
-function createTasksWrapper(title, description, tasks) {
+function createProjectWrapper(title, description, tasks) {
     const elWrapper = document.createElement('div');
     elWrapper.className = 'wrapper';
 
@@ -47,11 +47,11 @@ function createTasksWrapper(title, description, tasks) {
     return elWrapper
 }
 
-function createProjectCards(taskList) {
+function createProjectCards(taskList, doCounting) {
     const elTask = document.createElement('div');
     elTask.className = 'task';
 
-    return createTaskList(taskList);
+    return createTaskList(taskList, doCounting);
 }
 
 function createAddTaskButton() {
@@ -65,4 +65,4 @@ function createAddTaskButton() {
     return elParentDiv;
 }
 
-export { displayProject, createProject, createTasksWrapper };
+export { displayProject, createProject, createProjectWrapper, createAddTaskButton, createProjectCards };

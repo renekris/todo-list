@@ -5,11 +5,17 @@ import { updateSidebar } from "./display-controller";
 
 let taskCount = 0;
 
-function createTaskList(taskList) {
+function createTaskList(taskList, doCounting = true) {
     const elTaskList = document.createElement('div');
     elTaskList.id = 'task-list';
 
-    taskCount = 0;
+    if (doCounting !== true) {
+        taskCount = 0;
+        // makes it so new task span wont come up
+    } else {
+        taskCount = 99999;
+    }
+
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
         if (task.isCompleted !== true) {

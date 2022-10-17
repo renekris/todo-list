@@ -1,7 +1,7 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
 import { getProjectList, createProject, createTask, getTaskList, getAllUncompletedTasks } from "./data-db";
-import { displayProject, createTasksWrapper } from "./display-controller-projects";
+import { displayProject, createProjectWrapper, createAddTaskButton, createProjectCards } from "./display-controller-projects";
 import { eventDisplayModal } from "./display-controller-modal";
 
 const elContent = document.getElementById('content');
@@ -45,6 +45,12 @@ function addSidebarData() {
     elUpcomingButton.addEventListener('pointerdown', () => {
         currentProjectIndex = 0;
         displayUpcomingTasks();
+    })
+
+    const elPriorities = document.getElementById('button-priority');
+    elPriorities.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayPriorities();
     })
 
     updateSidebar();
@@ -156,7 +162,7 @@ function addHeaderData() {
 function displayAllTasks() {
     clearContent();
     const allTaskList = getTaskList();
-    const elWrapper = elContent.appendChild(createTasksWrapper(
+    const elWrapper = elContent.appendChild(createProjectWrapper(
         'All Tasks',
         'All active tasks',
         allTaskList,
@@ -167,7 +173,7 @@ function displayTodayTasks() {
     clearContent();
     const taskList = getTodaysTasks();
 
-    const elWrapper = elContent.appendChild(createTasksWrapper(
+    const elWrapper = elContent.appendChild(createProjectWrapper(
         'Today',
         'Tasks for today',
         taskList,
@@ -175,7 +181,7 @@ function displayTodayTasks() {
 }
 
 function getTodaysTasks() {
-    const allTaskList = getTaskList();
+    const allTaskList = getAllUncompletedTasks();
     const taskList = allTaskList.filter(task => {
         const currentDate = new Date(Date.now()).toISOString().split('T')[0];
         const taskDate = new Date(task.dueDate).toISOString().split('T')[0];
@@ -188,7 +194,7 @@ function getTodaysTasks() {
 function displayUpcomingTasks() {
     clearContent();
     const taskList = getUpcomingTasks();
-    const elWrapper = elContent.appendChild(createTasksWrapper(
+    const elWrapper = elContent.appendChild(createProjectWrapper(
         'Upcoming 7 days',
         'Tasks for the upcoming 7 days',
         taskList,
@@ -196,7 +202,7 @@ function displayUpcomingTasks() {
 }
 
 function getUpcomingTasks() {
-    const allTaskList = getTaskList();
+    const allTaskList = getAllUncompletedTasks();
     const taskList = allTaskList.filter(task => {
         const UNIX_WEEK_IN_SECONDS = 604800;
         const currentDateUnix = new Date(new Date(Date.now()).toISOString().split('T')[0]).getTime() / 1000;
@@ -208,6 +214,113 @@ function getUpcomingTasks() {
     });
 
     return taskList;
+}
+
+function displayPriorities() {
+    clearContent();
+    const elWrapper = elContent.appendChild(createPriorities());
+}
+
+function createPriorities() {
+    const elWrapper = document.createElement('div');
+    elWrapper.className = 'wrapper';
+
+    const priorityTasks = createPriority().priority();
+
+    // TITLE
+    const elListTitle = elWrapper.appendChild(createPriority().title('Priorities'));
+    elListTitle.classList.add('priority-list-title');
+
+    // DESCRIPTION
+    const elListDescription = elWrapper.appendChild(createPriority().description("Priority list"));
+    elListDescription.classList.add('priority-list-description');
+
+    // DESCRIPTION
+    const elPriorityOne = elWrapper.appendChild(createPriority().description("Priority 1"));
+    elPriorityOne.classList.add('priority-1');
+
+    // TASKS where tasks = priority 1
+    if (priorityTasks[0].length > 0) {
+        elWrapper.appendChild(createProjectCards(priorityTasks[0], true));
+    }
+
+    // DESCRIPTION
+    const elPriorityTwo = elWrapper.appendChild(createPriority().description("Priority 2"));
+    elPriorityTwo.classList.add('priority-2');
+
+    // TASKS where tasks = priority 2
+    if (priorityTasks[1].length > 0) {
+        elWrapper.appendChild(createProjectCards(priorityTasks[1], true));
+    }
+
+    // DESCRIPTION
+    const elPriorityThree = elWrapper.appendChild(createPriority().description("Priority 3"));
+    elPriorityThree.classList.add('priority-3');
+
+    // TASKS where tasks = priority 3
+    if (priorityTasks[2].length > 0) {
+        elWrapper.appendChild(createProjectCards(priorityTasks[2], true));
+    }
+    // DESCRIPTION
+    const elPriorityFour = elWrapper.appendChild(createPriority().description("Priority 4"));
+    elPriorityFour.classList.add('priority-4');
+
+    // TASKS where tasks = priority 4
+    if (priorityTasks[3].length > 0) {
+        elWrapper.appendChild(createProjectCards(priorityTasks[3], true));
+    }
+
+    elWrapper.appendChild(createAddTaskButton());
+
+    return elWrapper;
+}
+
+function createPriority() {
+    function title(title) {
+        const elTitle = document.createElement('h1');
+        elTitle.textContent = title;
+        elTitle.className = 'wrapper-title';
+        return elTitle;
+    }
+
+    function description(description) {
+        const elDescription = document.createElement('p');
+        elDescription.textContent = description;
+        elDescription.className = 'wrapper-description';
+        return elDescription;
+    }
+
+    function priority() {
+        const taskList = getAllUncompletedTasks();
+        let priorityOne = [];
+        let priorityTwo = [];
+        let priorityThree = [];
+        let priorityFour = [];
+        for (let i = 0; i < taskList.length; i++) {
+            const task = taskList[i];
+            if (task.priority == 1) {
+                priorityOne.push(task);
+            }
+            if (task.priority == 2) {
+                priorityTwo.push(task);
+            }
+            if (task.priority == 3) {
+                priorityThree.push(task);
+            }
+            if (task.priority == 4) {
+                priorityFour.push(task);
+            }
+            console.log(task.priority);
+        }
+
+        return [priorityOne, priorityTwo, priorityThree, priorityFour];
+    }
+
+    return {
+        title,
+        description,
+        priority,
+    };
 }
 
 export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar, updateSidebar };
