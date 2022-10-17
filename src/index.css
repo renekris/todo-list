@@ -95,7 +95,7 @@ p {
     align-items: center;
 }
 
-.add-task-button {
+.background-image-add {
     width: 2rem;
     height: 2rem;
     background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
@@ -105,10 +105,6 @@ p {
     border: none;
     cursor: pointer;
     transition: 0.1s cubic-bezier(0, 0, 0, 1);
-}
-
-.add-task-button:hover {
-    scale: 1.05;
 }
 
 .personal,
@@ -395,6 +391,7 @@ nav button:hover {
 }
 
 .add-button {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;

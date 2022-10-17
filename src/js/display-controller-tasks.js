@@ -1,6 +1,7 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, getProjectById } from "./data-db";
+import { eventDisplayModal } from "./display-controller-modal";
 
 function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
@@ -19,6 +20,8 @@ function createTaskList(taskList) {
         elSpan.textContent = 'How about we create some new tasks to complete!';
         elSpan.className = 'new-tasks-span';
     }
+
+    elTaskList.appendChild(createAddTaskButton());
 
     return elTaskList;
 }
@@ -232,15 +235,15 @@ function eventMenuCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
 }
 
-// OLD CREATE BUTTON CODE ON OVERALL VIEW
-// function createButton() {
-//     const elParentDiv = document.createElement('div');
-//     elParentDiv.className = 'add-button';
-//     const elButton = elParentDiv.appendChild(document.createElement('button'));
-//     elButton.textContent = 'Create a new task';
-//     elButton.addEventListener('pointerdown', eventAddModal);
+function createAddTaskButton() {
+    const elParentDiv = document.createElement('div');
+    elParentDiv.className = 'add-button';
+    const elButton = elParentDiv.appendChild(document.createElement('button'));
+    elButton.textContent = 'Create a new task';
+    elButton.classList.add('add-task-button');
+    elButton.addEventListener('pointerdown', eventDisplayModal);
 
-//     return elParentDiv;
-// }
+    return elParentDiv;
+}
 
 export { createTaskList };

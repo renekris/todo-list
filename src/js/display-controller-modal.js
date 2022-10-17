@@ -2,10 +2,10 @@ import { getProjectList, createTask, createProject, getProjectIndexById } from "
 import { displayCurrentProject, currentProjectIndex, setProjectsToSidebar } from "./display-controller";
 
 function eventDisplayModal(e) {
-    if (e.target.className === 'add-project-button') {
+    if (e.target.className.includes('add-project-button')) {
         displayModal('project');
-    } else if (e.target.className === 'add-task-button') {
-        displayModal('task'); //TEMP
+    } else if (e.target.className.includes('add-task-button')) {
+        displayModal('task');
     }
 }
 
