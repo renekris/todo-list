@@ -24,10 +24,16 @@ function initialize() {
 
 function addSidebarData() {
     const elTasksButton = document.getElementById('button-tasks');
-    elTasksButton.addEventListener('pointerdown', () => displayAllTasks());
+    elTasksButton.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayAllTasks()
+    });
 
     const elInboxButton = document.getElementById('button-inbox');
-    elInboxButton.addEventListener('pointerdown', () => displayProject(0));
+    elInboxButton.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayProject(0);
+    });
 
     updateSidebar();
     // possibly add checklist and/or notes
