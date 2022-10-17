@@ -1,6 +1,7 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, getProjectById } from "./data-db";
+import { setProjectsToSidebar } from "./display-controller";
 
 let taskCount = 0;
 
@@ -21,7 +22,7 @@ function createTaskList(taskList) {
     return elTaskList;
 }
 
-function canCreateNewTaskSpan(elTaskList) {
+function canCreateNewTaskSpan(elTaskList = document.getElementById('task-list')) {
     if (taskCount === 0) {
         const elSpan = elTaskList.insertBefore(document.createElement('span'), elTaskList.firstChild);
         elSpan.textContent = 'How about we create some new tasks!';
@@ -109,10 +110,10 @@ function eventCompleteCard(e) {
     getTaskById(TARGET_ID).setIsCompleted(true);
 
     taskCount--;
-    const elTaskList = document.getElementById('task-list');
-    canCreateNewTaskSpan(elTaskList);
+    canCreateNewTaskSpan();
 
     e.target.offsetParent.remove();
+    setProjectsToSidebar();
 }
 
 function getTaskById(id) {
@@ -223,12 +224,13 @@ function eventSaveCard(e) {
         task.setParentProjectId(e.target[4].value);
         // To make it look like card gets removed if card is being viewed from a project and its value gets changed
         elCard.remove();
+
+        taskCount--;
+        canCreateNewTaskSpan();
     }
 
     elCard.replaceWith(createCard(task));
-
-    console.dir(getProjectList());
-    console.dir(getTaskList());
+    setProjectsToSidebar();
 }
 
 function eventCancelCard(e) {

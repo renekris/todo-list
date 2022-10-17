@@ -25,6 +25,10 @@ class Project {
             this.tasks.splice(taskIndex, 1);
         }
     }
+
+    getUncompletedTasks() {
+        return this.tasks.filter(task => task.isCompleted === false);
+    }
 }
 
 class Task {

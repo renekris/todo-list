@@ -48,7 +48,7 @@ html {
 
 body {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 17.5rem 1fr;
     grid-template-rows: 1.3fr 25fr 1fr;
     margin: 0;
 }
@@ -197,6 +197,30 @@ nav button:hover {
     font-size: 1rem;
     padding: 0.25rem 0;
     height: fit-content;
+}
+
+.project-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-button-title {
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 1rem;
+    margin-right: auto;
+}
+
+.project-button-length {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    font-size: 0.75rem;
+    color: #707070;
+    pointer-events: none;
+    font-family: monospace;
 }
 
 .add-project-button {

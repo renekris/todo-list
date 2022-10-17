@@ -1,5 +1,5 @@
-import './index.css';
-import { initialize } from './js/display-controller';
+import "./index.css";
+import { initialize } from "./js/display-controller";
 
 (() => {
     initialize();

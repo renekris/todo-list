@@ -1,7 +1,7 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
 import { getProjectList, createProject, createTask, getTaskList } from "./data-db";
-import { displayProject, createTasksWrapper } from './display-controller-projects';
+import { displayProject, createTasksWrapper } from "./display-controller-projects";
 import { eventDisplayModal } from "./display-controller-modal";
 
 const elContent = document.getElementById('content');
@@ -43,9 +43,22 @@ function setProjectsToSidebar() {
     for (let i = 1; i < projects.length; i++) {
         const project = projects[i];
         const elProjectButton = elProjectsDiv.appendChild(document.createElement('button'));
-        elProjectButton.textContent = project.title;
+        elProjectButton.classList.add('project-button');
+        elProjectButton.title = project.title;
         elProjectButton.dataset.id = project.id;
         elProjectButton.addEventListener('pointerdown', eventProjectButtonClicked);
+
+        const elProjectTitle = elProjectButton.appendChild(document.createElement('div'));
+        elProjectTitle.textContent = project.title;
+        elProjectTitle.classList.add('project-button-title');
+
+        const taskLength = elProjectButton.appendChild(document.createElement('span'));
+        taskLength.classList.add('project-button-length');
+        if (project.getUncompletedTasks().length > 0) {
+            taskLength.textContent = project.getUncompletedTasks().length;
+        } else {
+            taskLength.textContent = " ";
+        }
     }
 
     elProjectsDiv.appendChild(createAddProjectButton());
@@ -97,7 +110,7 @@ function displayAllTasks() {
     const allTaskList = getTaskList();
     const elWrapper = elContent.appendChild(createTasksWrapper(
         'All tasks',
-        'Here are all of your active tasks',
+        'All active tasks',
         allTaskList,
     ));
 }

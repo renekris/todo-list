@@ -16,6 +16,7 @@ function eventSubmit(e) {
         const taskData = serializeTaskData(e.target);
         createTask(...taskData);
         displayCurrentProject(getProjectIndexById(e.target.project.value));
+        setProjectsToSidebar();
     } else if (e.target.offsetParent.className === 'project') {
         console.log(e.target);
         const projectData = serializeProjectData(e.target);
