@@ -1,13 +1,14 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, getProjectById } from "./data-db";
-import { eventDisplayModal } from "./display-controller-modal";
+
+let taskCount = 0;
 
 function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
     elTaskList.id = 'task-list';
 
-    let taskCount = 0;
+    taskCount = 0;
     for (let i = 0; i < taskList.length; i++) {
         const task = taskList[i];
         if (task.isCompleted !== true) {
@@ -15,15 +16,17 @@ function createTaskList(taskList) {
             taskCount++;
         }
     }
-    if (taskCount === 0) {
-        const elSpan = elTaskList.insertBefore(document.createElement('span'), elTaskList.firstChild);
-        elSpan.textContent = 'How about we create some new tasks to complete!';
-        elSpan.className = 'new-tasks-span';
-    }
-
-    elTaskList.appendChild(createAddTaskButton());
+    canCreateNewTaskSpan(elTaskList);
 
     return elTaskList;
+}
+
+function canCreateNewTaskSpan(elTaskList) {
+    if (taskCount === 0) {
+        const elSpan = elTaskList.insertBefore(document.createElement('span'), elTaskList.firstChild);
+        elSpan.textContent = 'How about we create some new tasks!';
+        elSpan.className = 'new-tasks-span';
+    }
 }
 
 function createCard(task) {
@@ -104,6 +107,11 @@ function createCardButtons() {
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
     getTaskById(TARGET_ID).setIsCompleted(true);
+
+    taskCount--;
+    const elTaskList = document.getElementById('task-list');
+    canCreateNewTaskSpan(elTaskList);
+
     e.target.offsetParent.remove();
 }
 
@@ -233,17 +241,6 @@ function eventCancelCard(e) {
 function eventMenuCard(e) {
     console.log(e.target.offsetParent.dataset.id);
     const TARGET_ID = e.target.offsetParent.dataset.id;
-}
-
-function createAddTaskButton() {
-    const elParentDiv = document.createElement('div');
-    elParentDiv.className = 'add-button';
-    const elButton = elParentDiv.appendChild(document.createElement('button'));
-    elButton.textContent = 'Create a new task';
-    elButton.classList.add('add-task-button');
-    elButton.addEventListener('pointerdown', eventDisplayModal);
-
-    return elParentDiv;
 }
 
 export { createTaskList };

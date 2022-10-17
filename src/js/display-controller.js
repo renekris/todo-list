@@ -3,7 +3,6 @@ import profilePicture from "../img/temp/profile-picture.png";
 import { getProjectList, createProject, createTask, getTaskList } from "./data-db";
 import { displayProject, createTasksWrapper } from './display-controller-projects';
 import { eventDisplayModal } from "./display-controller-modal";
-import { createTaskList } from "./display-controller-tasks";
 
 const elContent = document.getElementById('content');
 
@@ -94,10 +93,13 @@ function addHeaderData() {
 
 function displayAllTasks() {
     clearContent();
+    currentProjectIndex = 0;
     const allTaskList = getTaskList();
-    const elWrapper = elContent.appendChild(createTasksWrapper('All tasks', 'Here are all of your active tasks'));
-
-    elWrapper.appendChild(createTaskList(allTaskList));
+    const elWrapper = elContent.appendChild(createTasksWrapper(
+        'All tasks',
+        'Here are all of your active tasks',
+        allTaskList,
+    ));
 }
 
 export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar };
