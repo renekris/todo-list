@@ -1,5 +1,5 @@
 import { getProjectList, createTask, createProject, getProjectIndexById } from "./data-db";
-import { displayCurrentProject, currentProjectIndex, setProjectsToSidebar } from "./display-controller";
+import { displayCurrentProject, currentProjectIndex, updateSidebar } from "./display-controller";
 
 function eventDisplayModal(e) {
     if (e.target.className.includes('add-project-button')) {
@@ -16,12 +16,12 @@ function eventSubmit(e) {
         const taskData = serializeTaskData(e.target);
         createTask(...taskData);
         displayCurrentProject(getProjectIndexById(e.target.project.value));
-        setProjectsToSidebar();
+        updateSidebar();
     } else if (e.target.offsetParent.className === 'project') {
         console.log(e.target);
         const projectData = serializeProjectData(e.target);
         const projectIndex = createProject(...projectData) - 1;
-        setProjectsToSidebar();
+        updateSidebar();
         displayCurrentProject(projectIndex);
     }
 

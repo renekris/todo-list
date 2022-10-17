@@ -1,7 +1,7 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, getProjectById } from "./data-db";
-import { setProjectsToSidebar } from "./display-controller";
+import { updateSidebar } from "./display-controller";
 
 let taskCount = 0;
 
@@ -60,11 +60,13 @@ function createCardData(task, elParent) {
     const elTitle = elCardData.appendChild(document.createElement('p'));
     elTitle.className = 'card-title';
     elTitle.textContent = task.title;
+    elTitle.title = task.title;
 
     // DESCRIPTION
     const elDescription = elCardData.appendChild(document.createElement('p'));
     elDescription.className = 'card-description';
     elDescription.textContent = task.description;
+    elDescription.title = task.description;
 
     // DATE
     const elDate = elCardData.appendChild(document.createElement('p'));
@@ -113,7 +115,7 @@ function eventCompleteCard(e) {
     canCreateNewTaskSpan();
 
     e.target.offsetParent.remove();
-    setProjectsToSidebar();
+    updateSidebar();
 }
 
 function getTaskById(id) {
@@ -230,7 +232,7 @@ function eventSaveCard(e) {
     }
 
     elCard.replaceWith(createCard(task));
-    setProjectsToSidebar();
+    updateSidebar();
 }
 
 function eventCancelCard(e) {

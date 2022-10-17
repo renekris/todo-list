@@ -60,7 +60,7 @@ function createAddTaskButton() {
     const elButton = elParentDiv.appendChild(document.createElement('button'));
     elButton.textContent = 'Create a new task';
     elButton.classList.add('add-task-button');
-    elButton.addEventListener('pointerdown', eventDisplayModal);
+    elButton.addEventListener('pointerup', eventDisplayModal);
 
     return elParentDiv;
 }

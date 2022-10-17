@@ -107,4 +107,8 @@ function getTaskList() {
     return taskList;
 }
 
-export { getTaskList, getProjectList, createTask, createProject, getProjectById, getProjectIndexById };
+function getAllUncompletedTasks() {
+    return getTaskList().filter(task => task.isCompleted === false);
+}
+
+export { getTaskList, getProjectList, createTask, createProject, getProjectById, getProjectIndexById, getAllUncompletedTasks };

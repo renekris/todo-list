@@ -1,6 +1,6 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
-import { getProjectList, createProject, createTask, getTaskList } from "./data-db";
+import { getProjectList, createProject, createTask, getTaskList, getAllUncompletedTasks } from "./data-db";
 import { displayProject, createTasksWrapper } from "./display-controller-projects";
 import { eventDisplayModal } from "./display-controller-modal";
 
@@ -29,8 +29,31 @@ function addSidebarData() {
     const elInboxButton = document.getElementById('button-inbox');
     elInboxButton.addEventListener('pointerdown', () => displayProject(0));
 
-    setProjectsToSidebar();
+    updateSidebar();
     // possibly add checklist and/or notes
+}
+
+function updateSidebar() {
+    setTaskLengthsToSidebar();
+    setProjectsToSidebar();
+}
+
+function setTaskLengthsToSidebar() {
+    const inboxLength = getProjectList()[0].getUncompletedTasks().length;
+    const elInboxLength = document.getElementById('inbox-length');
+    if (inboxLength > 0) {
+        elInboxLength.textContent = inboxLength;
+    } else {
+        elInboxLength.textContent = '';
+    }
+
+    const allTasksLength = getAllUncompletedTasks().length;
+    const elAllTasksLength = document.getElementById('all-tasks-length');
+    if (allTasksLength > 0) {
+        elAllTasksLength.textContent = allTasksLength;
+    } else {
+        elAllTasksLength.textContent = '';
+    }
 }
 
 function setProjectsToSidebar() {
@@ -48,12 +71,12 @@ function setProjectsToSidebar() {
         elProjectButton.dataset.id = project.id;
         elProjectButton.addEventListener('pointerdown', eventProjectButtonClicked);
 
-        const elProjectTitle = elProjectButton.appendChild(document.createElement('div'));
+        const elProjectTitle = elProjectButton.appendChild(document.createElement('span'));
         elProjectTitle.textContent = project.title;
-        elProjectTitle.classList.add('project-button-title');
+        elProjectTitle.classList.add('button-title');
 
         const taskLength = elProjectButton.appendChild(document.createElement('span'));
-        taskLength.classList.add('project-button-length');
+        taskLength.classList.add('button-length');
         if (project.getUncompletedTasks().length > 0) {
             taskLength.textContent = project.getUncompletedTasks().length;
         } else {
@@ -115,4 +138,4 @@ function displayAllTasks() {
     ));
 }
 
-export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar };
+export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar, updateSidebar };
