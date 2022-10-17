@@ -23,17 +23,29 @@ function initialize() {
 }
 
 function addSidebarData() {
-    const elTasksButton = document.getElementById('button-tasks');
-    elTasksButton.addEventListener('pointerdown', () => {
-        currentProjectIndex = 0;
-        displayAllTasks()
-    });
-
     const elInboxButton = document.getElementById('button-inbox');
     elInboxButton.addEventListener('pointerdown', () => {
         currentProjectIndex = 0;
         displayProject(0);
     });
+
+    const elTasksButton = document.getElementById('button-tasks');
+    elTasksButton.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayAllTasks();
+    });
+
+    const elTodayButton = document.getElementById('button-today');
+    elTodayButton.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayTodayTasks();
+    })
+
+    const elUpcomingButton = document.getElementById('button-upcoming');
+    elUpcomingButton.addEventListener('pointerdown', () => {
+        currentProjectIndex = 0;
+        displayUpcomingTasks();
+    })
 
     updateSidebar();
     // possibly add checklist and/or notes
@@ -47,18 +59,26 @@ function updateSidebar() {
 function setTaskLengthsToSidebar() {
     const inboxLength = getProjectList()[0].getUncompletedTasks().length;
     const elInboxLength = document.getElementById('inbox-length');
-    if (inboxLength > 0) {
-        elInboxLength.textContent = inboxLength;
-    } else {
-        elInboxLength.textContent = '';
-    }
+    checkSetLength(inboxLength, elInboxLength);
 
     const allTasksLength = getAllUncompletedTasks().length;
     const elAllTasksLength = document.getElementById('all-tasks-length');
-    if (allTasksLength > 0) {
-        elAllTasksLength.textContent = allTasksLength;
+    checkSetLength(allTasksLength, elAllTasksLength);
+
+    const todayLength = getTodaysTasks().length;
+    const elTodayLength = document.getElementById('today-length');
+    checkSetLength(todayLength, elTodayLength);
+
+    const upcomingLength = getUpcomingTasks().length;
+    const elUpcoming = document.getElementById('upcoming-length');
+    checkSetLength(upcomingLength, elUpcoming);
+}
+
+function checkSetLength(length, lengthElement) {
+    if (length > 0) {
+        lengthElement.textContent = length;
     } else {
-        elAllTasksLength.textContent = '';
+        lengthElement.textContent = '';
     }
 }
 
@@ -135,13 +155,59 @@ function addHeaderData() {
 
 function displayAllTasks() {
     clearContent();
-    currentProjectIndex = 0;
     const allTaskList = getTaskList();
     const elWrapper = elContent.appendChild(createTasksWrapper(
-        'All tasks',
+        'All Tasks',
         'All active tasks',
         allTaskList,
     ));
+}
+
+function displayTodayTasks() {
+    clearContent();
+    const taskList = getTodaysTasks();
+
+    const elWrapper = elContent.appendChild(createTasksWrapper(
+        'Today',
+        'Tasks for today',
+        taskList,
+    ));
+}
+
+function getTodaysTasks() {
+    const allTaskList = getTaskList();
+    const taskList = allTaskList.filter(task => {
+        const currentDate = new Date(Date.now()).toISOString().split('T')[0];
+        const taskDate = new Date(task.dueDate).toISOString().split('T')[0];
+        return currentDate === taskDate;
+    });
+
+    return taskList;
+}
+
+function displayUpcomingTasks() {
+    clearContent();
+    const taskList = getUpcomingTasks();
+    const elWrapper = elContent.appendChild(createTasksWrapper(
+        'Upcoming 7 days',
+        'Tasks for the upcoming 7 days',
+        taskList,
+    ));
+}
+
+function getUpcomingTasks() {
+    const allTaskList = getTaskList();
+    const taskList = allTaskList.filter(task => {
+        const UNIX_WEEK_IN_SECONDS = 604800;
+        const currentDateUnix = new Date(new Date(Date.now()).toISOString().split('T')[0]).getTime() / 1000;
+        const currentDateWithinAWeekUnix = currentDateUnix + UNIX_WEEK_IN_SECONDS;
+        const taskDateUnix = Math.floor(new Date(task.dueDate).getTime() / 1000.0);
+
+        return taskDateUnix >= currentDateUnix
+            && taskDateUnix <= currentDateWithinAWeekUnix;
+    });
+
+    return taskList;
 }
 
 export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar, updateSidebar };
