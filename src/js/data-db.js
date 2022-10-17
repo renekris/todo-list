@@ -27,14 +27,6 @@ class Project {
     }
 }
 
-function createProject(title, description, isDefault) {
-    return projectList.push(new Project(title, description, isDefault));
-}
-
-function getProjectList() {
-    return projectList;
-}
-
 class Task {
     constructor(title, description, dueDate, priority, parentProjectId) {
         this.id = crypto.randomUUID();
@@ -86,8 +78,20 @@ function createTask(title, description, dueDate, priority, projectId = null) {
     }
 }
 
+function createProject(title, description, isDefault) {
+    return projectList.push(new Project(title, description, isDefault));
+}
+
+function getProjectList() {
+    return projectList;
+}
+
 function getProjectById(id) {
     return projectList.find(project => project.id === id);
+}
+
+function getProjectIndexById(id) {
+    return projectList.findIndex(project => project.id === id);
 }
 
 function getTaskList() {
@@ -99,4 +103,4 @@ function getTaskList() {
     return taskList;
 }
 
-export { getTaskList, getProjectList, createTask, createProject };
+export { getTaskList, getProjectList, createTask, createProject, getProjectById, getProjectIndexById };

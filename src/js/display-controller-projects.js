@@ -14,34 +14,35 @@ function createProject(projectIndex) {
     const projects = getProjectList();
     const project = projects[projectIndex];
 
-    // PARENT
-    const elProject = document.createElement('div');
-    elProject.className = 'project wrapper';
+    const elWrapper = createTasksWrapper(project.title, project.description);
+
+    elWrapper.appendChild(createProjectCards(project.tasks));
+
+    return elWrapper;
+}
+
+function createTasksWrapper(title, description) {
+    const elWrapper = document.createElement('div');
+    elWrapper.className = 'wrapper';
 
     // TITLE
-    const elTitle = elProject.appendChild(document.createElement('h1'));
-    elTitle.textContent = project.title;
-    elTitle.className = 'project-title';
+    const elTitle = elWrapper.appendChild(document.createElement('h1'));
+    elTitle.textContent = title;
+    elTitle.className = 'wrapper-title';
 
     // DESCRIPTION
-    const elDescription = elProject.appendChild(document.createElement('p'));
-    elDescription.textContent = project.description;
-    elDescription.className = 'project-description';
+    const elDescription = elWrapper.appendChild(document.createElement('p'));
+    elDescription.textContent = description;
+    elDescription.className = 'wrapper-description';
 
-    //// TASKS
-    const elTasks = elProject.appendChild(document.createElement('div'));
-    elTasks.className = 'project-tasks';
-
-    elTasks.appendChild(createProjectCards(project.tasks));
-
-    return elProject;
+    return elWrapper
 }
 
 function createProjectCards(taskList) {
     const elTask = document.createElement('div');
     elTask.className = 'task';
 
-    return createTaskList(taskList, 'project');
+    return createTaskList(taskList);
 }
 
-export { displayProject, createProject };
+export { displayProject, createProject, createTasksWrapper };

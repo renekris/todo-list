@@ -1,8 +1,9 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
-import { getProjectList, createProject, createTask } from "./data-db";
-import { displayProject } from './display-controller-projects';
+import { getProjectList, createProject, createTask, getTaskList } from "./data-db";
+import { displayProject, createTasksWrapper } from './display-controller-projects';
 import { eventDisplayModal } from "./display-controller-modal";
+import { createTaskList } from "./display-controller-tasks";
 
 const elContent = document.getElementById('content');
 
@@ -10,7 +11,7 @@ export let currentProjectIndex = 0;
 
 function initialize() {
     // IMMUTABLE DEFAULT PROJECT
-    createProject('Tasks', '', true);
+    createProject('Inbox', 'Active tasks', true);
 
     // TEMP PROJECTS
     createProject('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
@@ -24,7 +25,10 @@ function initialize() {
 
 function addSidebarData() {
     const elTasksButton = document.getElementById('button-tasks');
-    elTasksButton.addEventListener('pointerdown', () => displayProject(0));
+    elTasksButton.addEventListener('pointerdown', () => displayAllTasks());
+
+    const elInboxButton = document.getElementById('button-inbox');
+    elInboxButton.addEventListener('pointerdown', () => displayProject(0));
 
     setProjectsToSidebar();
     // possibly add checklist and/or notes
@@ -86,6 +90,14 @@ function addHeaderData() {
 
     const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
     elProfilePicture.src = profilePicture;
+}
+
+function displayAllTasks() {
+    clearContent();
+    const allTaskList = getTaskList();
+    const elWrapper = elContent.appendChild(createTasksWrapper('All tasks', 'Here are all of your active tasks'));
+
+    elWrapper.appendChild(createTaskList(allTaskList));
 }
 
 export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar };

@@ -1,10 +1,9 @@
-import { getProjectList, createTask, createProject } from "./data-db";
+import { getProjectList, createTask, createProject, getProjectIndexById } from "./data-db";
 import { displayCurrentProject, currentProjectIndex, setProjectsToSidebar } from "./display-controller";
 
 function eventDisplayModal(e) {
     if (e.target.className === 'add-project-button') {
         displayModal('project');
-
     } else if (e.target.className === 'add-task-button') {
         displayModal('task'); //TEMP
     }
@@ -16,14 +15,16 @@ function eventSubmit(e) {
     if (e.target.offsetParent.className === 'task') {
         const taskData = serializeTaskData(e.target);
         createTask(...taskData);
+        displayCurrentProject(getProjectIndexById(e.target.project.value));
     } else if (e.target.offsetParent.className === 'project') {
+        console.log(e.target);
         const projectData = serializeProjectData(e.target);
-        createProject(...projectData);
+        const projectIndex = createProject(...projectData) - 1;
         setProjectsToSidebar();
+        displayCurrentProject(projectIndex);
     }
 
     removeModal();
-    displayCurrentProject();
 }
 
 function serializeTaskData(targetElement) {

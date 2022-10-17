@@ -22607,14 +22607,6 @@ class Project {
     }
 }
 
-function createProject(title, description, isDefault) {
-    return projectList.push(new Project(title, description, isDefault));
-}
-
-function getProjectList() {
-    return projectList;
-}
-
 class Task {
     constructor(title, description, dueDate, priority, parentProjectId) {
         this.id = crypto.randomUUID();
@@ -22664,6 +22656,14 @@ function createTask(title, description, dueDate, priority, projectId = null) {
             console.error('Missing default with no specified ID');
         }
     }
+}
+
+function createProject(title, description, isDefault) {
+    return projectList.push(new Project(title, description, isDefault));
+}
+
+function getProjectList() {
+    return projectList;
 }
 
 function getProjectById(id) {
@@ -23307,7 +23307,7 @@ let currentProjectIndex = 0;
 
 function initialize() {
     // IMMUTABLE DEFAULT PROJECT
-    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Tasks', '', true);
+    (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Inbox', '', true);
 
     // TEMP PROJECTS
     (0,_data_db__WEBPACK_IMPORTED_MODULE_1__.createProject)('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
@@ -23321,7 +23321,10 @@ function initialize() {
 
 function addSidebarData() {
     const elTasksButton = document.getElementById('button-tasks');
-    elTasksButton.addEventListener('pointerdown', () => (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_2__.displayProject)(0));
+    elTasksButton.addEventListener('pointerdown', () => displayAllTasks());
+
+    const elInboxButton = document.getElementById('button-inbox');
+    elInboxButton.addEventListener('click', () => (0,_display_controller_projects__WEBPACK_IMPORTED_MODULE_2__.displayProject)(0));
 
     setProjectsToSidebar();
     // possibly add checklist and/or notes

@@ -1,12 +1,10 @@
 const dateFns = require('date-fns');
 
-import { getTaskList, getProjectList } from "./data-db";
-import { displayCurrentProject } from "./display-controller";
+import { getTaskList, getProjectList, getProjectById } from "./data-db";
 
-function createTaskList(taskList, classIdentifier = 'home') {
+function createTaskList(taskList) {
     const elTaskList = document.createElement('div');
     elTaskList.id = 'task-list';
-    elTaskList.className = classIdentifier;
 
     let taskCount = 0;
     for (let i = 0; i < taskList.length; i++) {
@@ -18,7 +16,7 @@ function createTaskList(taskList, classIdentifier = 'home') {
     }
     if (taskCount === 0) {
         const elSpan = elTaskList.insertBefore(document.createElement('span'), elTaskList.firstChild);
-        elSpan.textContent = 'Looks like you have no remaining tasks!';
+        elSpan.textContent = 'How about we create some new tasks to complete!';
         elSpan.className = 'new-tasks-span';
     }
 
@@ -74,7 +72,7 @@ function createCardData(task, elParent) {
     // PROJECT
     const elProject = elCardData.appendChild(document.createElement('p'));
     elProject.className = 'card-project';
-    // elProject.textContent = task.notes;
+    elProject.textContent = getProjectById(task.parentProjectId).title;
 
     // SETTINGS
     elCardData.appendChild(createCardButtons());
@@ -103,7 +101,7 @@ function createCardButtons() {
 function eventCompleteCard(e) {
     const TARGET_ID = e.target.offsetParent.dataset.id;
     getTaskById(TARGET_ID).setIsCompleted(true);
-    displayCurrentProject();
+    e.target.offsetParent.remove();
 }
 
 function getTaskById(id) {
@@ -213,9 +211,7 @@ function eventSaveCard(e) {
     if (task.parentProjectId !== e.target[4].value) {
         task.setParentProjectId(e.target[4].value);
         // To make it look like card gets removed if card is being viewed from a project and its value gets changed
-        if (elCard.parentElement.className === 'project') {
-            elCard.remove();
-        }
+        elCard.remove();
     }
 
     elCard.replaceWith(createCard(task));
