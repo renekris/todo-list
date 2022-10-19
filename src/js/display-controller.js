@@ -1,6 +1,6 @@
 import profilePicture from "../img/temp/profile-picture.png";
 
-import { getProjectList, createProject, createTask, getTaskList, getAllUncompletedTasks } from "./data-db";
+import { getProjectList, createProject, createTask, getTaskList, getAllUncompletedTasks, doesStorageHaveContent } from "./data-db";
 import { displayProject, createProjectWrapper, createAddTaskButton, createProjectCards } from "./display-controller-projects";
 import { eventDisplayModal } from "./display-controller-modal";
 
@@ -9,14 +9,6 @@ const elContent = document.getElementById('content');
 export let currentProjectIndex = 0;
 
 function initialize() {
-    // IMMUTABLE DEFAULT PROJECT
-    createProject('Inbox', 'Active tasks', true);
-
-    // TEMP PROJECTS
-    createProject('Office', 'Ahh, more work at the office. Things that I have to finish at work.');
-    createTask('Go outside', 'Go outside and touch some grass.', Date.now(), 1);
-    createTask('Sleep', 'Jump onto your bed and take a nap.', 1643587200000, 4);
-
     addHeaderData();
     addSidebarData();
     displayProject(currentProjectIndex);
@@ -312,7 +304,6 @@ function createPriority() {
             if (task.priority == 4) {
                 priorityFour.push(task);
             }
-            console.log(task.priority);
         }
 
         return [priorityOne, priorityTwo, priorityThree, priorityFour];

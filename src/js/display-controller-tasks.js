@@ -235,7 +235,7 @@ function eventSaveCard(e) {
     }
 
     // To refresh priorities view if updating from there
-    if (e.target.offsetParent.parentElement.dataset.from === 'priority') {
+    if (e.target?.offsetParent?.parentElement?.dataset?.from === 'priority') {
         displayPriorities();
     }
 

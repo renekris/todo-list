@@ -46,15 +46,17 @@ class Task {
 
     setIsCompleted(value) {
         this.isCompleted = value;
+        saveToStorage();
     }
 
     setParentProjectId(projectId) {
-        this.#removeTaskFromProject();
-        this.#addTaskToProject(projectId);
+        this.removeTaskFromProject();
+        this.addTaskToProject(projectId);
         this.parentProjectId = projectId;
+        saveToStorage();
     }
 
-    #removeTaskFromProject() {
+    removeTaskFromProject() {
         const project = projectList.find(project => project.id === this.parentProjectId);
         const projectTaskIndex = project.tasks.findIndex(projectTask => projectTask.id === this.id);
         if (projectTaskIndex > -1) {
@@ -62,7 +64,7 @@ class Task {
         }
     }
 
-    #addTaskToProject(projectId) {
+    addTaskToProject(projectId) {
         const project = projectList.find(project => project.id === projectId);
         project.tasks.push(this);
     }
@@ -80,10 +82,13 @@ function createTask(title, description, dueDate, priority, projectId = null) {
             console.error('Missing default with no specified ID');
         }
     }
+    saveToStorage();
 }
 
 function createProject(title, description, isDefault) {
-    return projectList.push(new Project(title, description, isDefault));
+    const index = projectList.push(new Project(title, description, isDefault));
+    saveToStorage();
+    return index;
 }
 
 function deleteProject(id) {
@@ -92,6 +97,7 @@ function deleteProject(id) {
 }
 
 function getProjectList() {
+    saveToStorage();
     return projectList;
 }
 
@@ -116,6 +122,47 @@ function getAllUncompletedTasks() {
     return getTaskList().filter(task => task.isCompleted === false);
 }
 
+function saveToStorage() {
+    window.localStorage.setItem('projectList', JSON.stringify(projectList));
+}
+
+function fetchFromStorage() {
+    // window.localStorage.clear();
+    const rawProjectList = JSON.parse(window.localStorage.getItem('projectList'));
+    let newList = [];
+    for (let i = 0; i < rawProjectList?.length; i++) {
+        let rawProject = rawProjectList[i];
+
+        let project = Object.setPrototypeOf(rawProject, Project.prototype);
+        project.tasks.forEach(task => {
+            task = Object.setPrototypeOf(task, Task.prototype);
+        });
+
+        newList.push(project);
+
+
+        // console.log(rawProject);
+        // const project = Object.create(Project, rawProject);
+        // console.log(project);
+        // projectList.push(project);
+    }
+    // console.log(Task.prototype);
+    // console.log(rawProjectList[1]);
+    // console.log(newList[0]);
+    console.log(newList[0]);
+    console.log(rawProjectList[0]);
+    projectList = newList;
+}
+
+function doesStorageHaveContent() {
+    const projectListData = JSON.parse(window.localStorage.getItem('projectList'));
+    if (projectListData?.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export {
     getTaskList,
     getProjectList,
@@ -125,4 +172,7 @@ export {
     getProjectIndexById,
     getAllUncompletedTasks,
     deleteProject,
+    saveToStorage,
+    fetchFromStorage,
+    doesStorageHaveContent,
 };
