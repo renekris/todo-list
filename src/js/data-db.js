@@ -86,6 +86,11 @@ function createProject(title, description, isDefault) {
     return projectList.push(new Project(title, description, isDefault));
 }
 
+function deleteProject(id) {
+    const projectIndex = getProjectIndexById(id);
+    projectList.splice(projectIndex, 1);
+}
+
 function getProjectList() {
     return projectList;
 }
@@ -111,4 +116,13 @@ function getAllUncompletedTasks() {
     return getTaskList().filter(task => task.isCompleted === false);
 }
 
-export { getTaskList, getProjectList, createTask, createProject, getProjectById, getProjectIndexById, getAllUncompletedTasks };
+export {
+    getTaskList,
+    getProjectList,
+    createTask,
+    createProject,
+    getProjectById,
+    getProjectIndexById,
+    getAllUncompletedTasks,
+    deleteProject,
+};

@@ -1,7 +1,7 @@
 const dateFns = require('date-fns');
 
 import { getTaskList, getProjectList, getProjectById } from "./data-db";
-import { updateSidebar } from "./display-controller";
+import { displayPriorities, updateSidebar } from "./display-controller";
 
 let taskCount = 0;
 
@@ -52,7 +52,7 @@ function createCardCompleteButton() {
     elCardComplete.className = 'card-complete';
     const elCardCompleteButton = elCardComplete.appendChild(document.createElement('button'));
     elCardCompleteButton.className = 'card-complete-button';
-    elCardCompleteButton.addEventListener('pointerdown', eventCompleteCard);
+    elCardCompleteButton.addEventListener('click', eventCompleteCard);
 
     return elCardComplete;
 }
@@ -103,12 +103,7 @@ function createCardButtons() {
     // EDIT
     const elCardEdit = elCardButtons.appendChild(document.createElement('button'));
     elCardEdit.className = 'card-edit';
-    elCardEdit.addEventListener('pointerdown', eventEditCard)
-
-    // MENU
-    const elCardMenu = elCardButtons.appendChild(document.createElement('button'));
-    elCardMenu.className = 'card-menu';
-    elCardMenu.addEventListener('pointerdown', eventMenuCard)
+    elCardEdit.addEventListener('click', eventEditCard);
 
     return elCardButtons;
 }
@@ -205,7 +200,7 @@ function createCardEdit(task) {
     const elCancel = elButtons.appendChild(document.createElement('button'));
     elCancel.className = 'edit-cancel';
     elCancel.textContent = 'Cancel';
-    elCancel.addEventListener('pointerdown', eventCancelCard);
+    elCancel.addEventListener('click', eventCancelCard);
 
     // SUBMIT
     const elSubmit = elButtons.appendChild(document.createElement('button'));
@@ -235,6 +230,13 @@ function eventSaveCard(e) {
 
         taskCount--;
         canCreateNewTaskSpan();
+
+
+    }
+
+    // To refresh priorities view if updating from there
+    if (e.target.offsetParent.parentElement.dataset.from === 'priority') {
+        displayPriorities();
     }
 
     elCard.replaceWith(createCard(task));

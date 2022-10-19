@@ -194,8 +194,7 @@ nav button:hover {
         rgba(253, 132, 31, 1) 10%,
         rgba(255, 255, 255, 0) 90%
     );
-
-    transition: 0.25s cubic-bezier(0, 0, 0, 1.1);
+    transition: 0.25s cubic-bezier(0, 0, 0, 1);
 }
 
 .nav-header:hover h4 {
@@ -207,7 +206,7 @@ nav button:hover {
         rgba(253, 132, 31, 1) 50%,
         rgba(255, 255, 255, 0) 100%
     );
-    transition: 0.25s cubic-bezier(0, 0, 0, 1.1);
+    transition: 0.25s cubic-bezier(0, 0, 0, 1);
 }
 
 .nav-content {
@@ -215,7 +214,7 @@ nav button:hover {
     margin: 0;
 }
 
-.nav-content button {
+.nav-content > button {
     font-size: 1rem;
     padding: 0.25rem 1rem;
     height: fit-content;
@@ -224,10 +223,76 @@ nav button:hover {
     align-items: center;
 }
 
+#button-inbox::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/inbox_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#button-tasks::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/calendar_month_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#button-today::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/today_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#button-upcoming::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/date_range_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#button-priority::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/priority_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .project-button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.project-button::before {
+    content: "";
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-right: 0.2rem;
+    background-image: url(./img/svg/list_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .button-title {
@@ -267,6 +332,34 @@ nav button:hover {
 
 .wrapper {
     width: 80%;
+}
+
+.title-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.delete-project-button {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    background-image: url(./img/svg/delete_forever_FILL0_wght400_GRAD0_opsz48.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    filter: drop-shadow(0 0 2px 1px black);
+    border: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--content-background) !important;
+    flex-shrink: 0;
+    transition: 0.1s ease;
+}
+
+.delete-project-button:hover {
+    scale: 1.1;
 }
 
 #task-list {
@@ -517,6 +610,42 @@ nav button:hover {
     box-shadow: -2px 0 1.25rem 0.25rem var(--priority-4);
 }
 
+.priority-list.priority-1 ~ #task-list {
+    background: linear-gradient(
+        90deg,
+        rgba(209, 51, 51, 0) 0%,
+        rgba(209, 51, 51, 0.25) 100%
+    );
+}
+
+.priority-list.priority-2 ~ #task-list {
+    background: linear-gradient(
+        90deg,
+        rgba(253, 132, 31, 0) 0%,
+        rgba(253, 132, 31, 0.25) 100%
+    );
+}
+
+.priority-list.priority-3 ~ #task-list {
+    background: linear-gradient(
+        90deg,
+        rgba(71, 181, 255, 0) 0%,
+        rgba(71, 181, 255, 0.25) 100%
+    );
+}
+.priority-list.priority-4 ~ #task-list {
+    background: linear-gradient(
+        90deg,
+        rgba(221, 221, 221, 0) 0%,
+        rgba(221, 221, 221, 0.25) 100%
+    );
+}
+
+.priority-list {
+    font-size: 1.2rem;
+    padding: 0.2rem 0 0.2rem 0;
+    text-align: center;
+}
 /* EDITING A CARD */
 
 #task-list > div.editing {
@@ -641,7 +770,9 @@ nav button:hover {
     height: 100%;
     z-index: 1000;
 
-    background-color: #111111a1;
+    background-color: #00000042;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
 }
 
 /* Hovering on the modal makes content invisible */

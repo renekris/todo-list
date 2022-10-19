@@ -24,31 +24,31 @@ function initialize() {
 
 function addSidebarData() {
     const elInboxButton = document.getElementById('button-inbox');
-    elInboxButton.addEventListener('pointerdown', () => {
+    elInboxButton.addEventListener('click', () => {
         currentProjectIndex = 0;
         displayProject(0);
     });
 
     const elTasksButton = document.getElementById('button-tasks');
-    elTasksButton.addEventListener('pointerdown', () => {
+    elTasksButton.addEventListener('click', () => {
         currentProjectIndex = 0;
         displayAllTasks();
     });
 
     const elTodayButton = document.getElementById('button-today');
-    elTodayButton.addEventListener('pointerdown', () => {
+    elTodayButton.addEventListener('click', () => {
         currentProjectIndex = 0;
         displayTodayTasks();
     })
 
     const elUpcomingButton = document.getElementById('button-upcoming');
-    elUpcomingButton.addEventListener('pointerdown', () => {
+    elUpcomingButton.addEventListener('click', () => {
         currentProjectIndex = 0;
         displayUpcomingTasks();
     })
 
     const elPriorities = document.getElementById('button-priority');
-    elPriorities.addEventListener('pointerdown', () => {
+    elPriorities.addEventListener('click', () => {
         currentProjectIndex = 0;
         displayPriorities();
     })
@@ -101,18 +101,20 @@ function setProjectsToSidebar() {
         elProjectButton.classList.add('project-button');
         elProjectButton.title = project.title;
         elProjectButton.dataset.id = project.id;
-        elProjectButton.addEventListener('pointerdown', eventProjectButtonClicked);
+        elProjectButton.addEventListener('click', eventProjectButtonClicked);
 
+        // TITLE
         const elProjectTitle = elProjectButton.appendChild(document.createElement('span'));
         elProjectTitle.textContent = project.title;
         elProjectTitle.classList.add('button-title');
 
-        const taskLength = elProjectButton.appendChild(document.createElement('span'));
-        taskLength.classList.add('button-length');
+        // LENGTH
+        const elProjectTaskLength = elProjectButton.appendChild(document.createElement('span'));
+        elProjectTaskLength.classList.add('button-length');
         if (project.getUncompletedTasks().length > 0) {
-            taskLength.textContent = project.getUncompletedTasks().length;
+            elProjectTaskLength.textContent = project.getUncompletedTasks().length;
         } else {
-            taskLength.textContent = " ";
+            elProjectTaskLength.textContent = "";
         }
     }
 
@@ -122,8 +124,8 @@ function setProjectsToSidebar() {
 function createAddProjectButton() {
     const elButton = document.createElement('button');
     elButton.classList.add('add-project-button');
-    // using pointerUP to make focus on form element possible
-    elButton.addEventListener('pointerup', eventDisplayModal);
+    // using click to make focus on form element possible
+    elButton.addEventListener('click', eventDisplayModal);
     return elButton;
 }
 
@@ -147,13 +149,13 @@ function displayCurrentProject(overwriteProjectIndex = null) {
 
 function addHeaderData() {
     const elLogo = Array.from(document.getElementsByClassName('logo'))[0];
-    elLogo.addEventListener('pointerdown', () => {
+    elLogo.addEventListener('click', () => {
         displayCurrentProject(0);
     });
 
     const elHeaderAddButton = Array.from(document.getElementsByClassName('add-task-button'))[0];
-    // using pointerUP to make focus on form element possible
-    elHeaderAddButton.addEventListener('pointerup', eventDisplayModal);
+    // using click to make focus on form element possible
+    elHeaderAddButton.addEventListener('click', eventDisplayModal);
 
     const elProfilePicture = Array.from(document.getElementsByClassName('profile-picture'))[0];
     elProfilePicture.src = profilePicture;
@@ -232,42 +234,42 @@ function createPriorities() {
     elListTitle.classList.add('priority-list-title');
 
     // DESCRIPTION
-    const elListDescription = elWrapper.appendChild(createPriority().description("Priority list"));
-    elListDescription.classList.add('priority-list-description');
-
-    // DESCRIPTION
     const elPriorityOne = elWrapper.appendChild(createPriority().description("Priority 1"));
-    elPriorityOne.classList.add('priority-1');
+    elPriorityOne.classList.add('priority-1', 'priority-list');
 
     // TASKS where tasks = priority 1
     if (priorityTasks[0].length > 0) {
-        elWrapper.appendChild(createProjectCards(priorityTasks[0], true));
+        const elTasks = elWrapper.appendChild(createProjectCards(priorityTasks[0], true));
+        elTasks.dataset.from = 'priority';
     }
 
     // DESCRIPTION
     const elPriorityTwo = elWrapper.appendChild(createPriority().description("Priority 2"));
-    elPriorityTwo.classList.add('priority-2');
+    elPriorityTwo.classList.add('priority-2', 'priority-list');
 
     // TASKS where tasks = priority 2
     if (priorityTasks[1].length > 0) {
-        elWrapper.appendChild(createProjectCards(priorityTasks[1], true));
+        const elTasks = elWrapper.appendChild(createProjectCards(priorityTasks[1], true));
+        elTasks.dataset.from = 'priority';
     }
 
     // DESCRIPTION
     const elPriorityThree = elWrapper.appendChild(createPriority().description("Priority 3"));
-    elPriorityThree.classList.add('priority-3');
+    elPriorityThree.classList.add('priority-3', 'priority-list');
 
     // TASKS where tasks = priority 3
     if (priorityTasks[2].length > 0) {
-        elWrapper.appendChild(createProjectCards(priorityTasks[2], true));
+        const elTasks = elWrapper.appendChild(createProjectCards(priorityTasks[2], true));
+        elTasks.dataset.from = 'priority';
     }
     // DESCRIPTION
     const elPriorityFour = elWrapper.appendChild(createPriority().description("Priority 4"));
-    elPriorityFour.classList.add('priority-4');
+    elPriorityFour.classList.add('priority-4', 'priority-list');
 
     // TASKS where tasks = priority 4
     if (priorityTasks[3].length > 0) {
-        elWrapper.appendChild(createProjectCards(priorityTasks[3], true));
+        const elTasks = elWrapper.appendChild(createProjectCards(priorityTasks[3], true));
+        elTasks.dataset.from = 'priority';
     }
 
     elWrapper.appendChild(createAddTaskButton());
@@ -323,4 +325,11 @@ function createPriority() {
     };
 }
 
-export { initialize, clearContent, displayCurrentProject, setProjectsToSidebar, updateSidebar };
+export {
+    initialize,
+    clearContent,
+    displayCurrentProject,
+    setProjectsToSidebar,
+    updateSidebar,
+    displayPriorities,
+};
