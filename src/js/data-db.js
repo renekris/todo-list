@@ -124,10 +124,10 @@ function getAllUncompletedTasks() {
 
 function saveToStorage() {
     window.localStorage.setItem('projectList', JSON.stringify(projectList));
+    console.log('%cSave to storage', 'color: red;');
 }
 
 function fetchFromStorage() {
-    // window.localStorage.clear();
     const rawProjectList = JSON.parse(window.localStorage.getItem('projectList'));
     let newList = [];
     for (let i = 0; i < rawProjectList?.length; i++) {
@@ -139,19 +139,9 @@ function fetchFromStorage() {
         });
 
         newList.push(project);
-
-
-        // console.log(rawProject);
-        // const project = Object.create(Project, rawProject);
-        // console.log(project);
-        // projectList.push(project);
     }
-    // console.log(Task.prototype);
-    // console.log(rawProjectList[1]);
-    // console.log(newList[0]);
-    console.log(newList[0]);
-    console.log(rawProjectList[0]);
     projectList = newList;
+    console.log('%cLoaded from storage', 'color: green;');
 }
 
 function doesStorageHaveContent() {

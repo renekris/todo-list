@@ -18,7 +18,6 @@ function eventSubmit(e) {
         displayCurrentProject(getProjectIndexById(e.target.project.value));
         updateSidebar();
     } else if (e.target.offsetParent.className === 'project') {
-        console.log(e.target);
         const projectData = serializeProjectData(e.target);
         const projectIndex = createProject(...projectData) - 1;
         updateSidebar();
@@ -138,7 +137,7 @@ function createModalElement() {
         elTitle.id = 'title';
 
         //////// TESTING PURPOSES
-        elTitle.value = 'Title test';
+        // elTitle.value = 'Title test';
         //////// TESTING PURPOSES
 
         return elTitleLabel;
@@ -155,7 +154,7 @@ function createModalElement() {
         elDescription.rows = '10';
 
         //////// TESTING PURPOSES
-        elDescription.value = 'Description test'
+        // elDescription.value = 'Description test'
         //////// TESTING PURPOSES
 
         return elDescriptionLabel;

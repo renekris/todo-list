@@ -13,7 +13,7 @@ function createTaskList(taskList, doCounting = true) {
         taskCount = 0;
         // makes it so new task span wont come up
     } else {
-        taskCount = 99999;
+        taskCount = Number.POSITIVE_INFINITY;
     }
 
     for (let i = 0; i < taskList.length; i++) {
@@ -77,9 +77,17 @@ function createCardData(task, elParent) {
     // DATE
     const elDate = elCardData.appendChild(document.createElement('p'));
     elDate.className = 'card-dueDate';
-    if (dateFns.isValid(task.dueDate)) {
-        elDate.textContent = dateFns.format(task.dueDate, 'yyyy-MM-dd');
-    } else elDate.textContent = task.dueDate;
+
+    const date = new Date(task.dueDate);
+    if (dateFns.isValid(date)) {
+        elDate.textContent = dateFns.format(date, 'Y LLL dd ');
+
+        const elDaySpan = elDate.appendChild(document.createElement('span'));
+        elDaySpan.className = 'day-span';
+        elDaySpan.textContent = dateFns.format(date, '(E)');
+    } else {
+        elDate.textContent = task.dueDate;
+    }
 
     // PRIORITY
     elParent.classList.add(`priority-${task.priority}`);
