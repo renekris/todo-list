@@ -151,6 +151,7 @@ p {
 }
 
 nav button {
+    position: relative;
     height: 2rem;
     border: none;
     cursor: pointer;
@@ -332,6 +333,10 @@ nav button:hover {
 
 .wrapper {
     width: 80%;
+}
+
+.title-div ~ .wrapper-description {
+    margin-bottom: 1rem;
 }
 
 .title-div {
