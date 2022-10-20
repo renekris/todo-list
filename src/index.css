@@ -104,7 +104,7 @@ p {
     height: 2rem;
     background-image: url(./img/svg/add_FILL0_wght400_GRAD0_opsz48.svg);
     background-color: transparent;
-    background-position: no-repeat;
+    background-repeat: no-repeat;
     background-size: contain;
     border: none;
     cursor: pointer;
